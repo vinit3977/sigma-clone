@@ -1,0 +1,122 @@
+/* General Styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Hero Section */
+.hero-section {
+  background-color: #002E50; /* Dark blue background */
+  color: #ffffff; /* White text color */
+  text-align: center; /* Center-align text */
+  padding: 5vw 10vw; /* Responsive padding */
+}
+
+/* Dark Blue Background Utility Class */
+.bg-dark-blue {
+  background-color: #002b4d;
+}
+
+/* Circle Decorations (Responsive) */
+.circle-decorations {
+  position: relative;
+  width: 80vw; /* Make it responsive */
+  max-width: 300px; /* Maximum size for larger screens */
+  height: 80vw;
+  max-height: 300px;
+  margin: 0 auto; /* Center horizontally */
+}
+
+.circle-decorations::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 70%; /* Adjust width for responsiveness */
+  height: 70%;
+  border-radius: 50%;
+  border: 1px dashed #fff;
+  transform: translate(-50%, -50%);
+  animation: spin 10s linear infinite; /* Slow clockwise spin */
+}
+
+.circle-decorations::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50%; /* Adjust width for responsiveness */
+  height: 50%;
+  border-radius: 50%;
+  border: 1px dashed rgba(255, 255, 255, 0.5); /* Semi-transparent white border */
+  transform: translate(-50%, -50%);
+  animation: spin-reverse 15s linear infinite; /* Slow counter-clockwise spin */
+}
+.button{
+  background-color: #ffc107;
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 1.2rem;
+  margin-top: 20px;
+  display: inline-block;
+  transition: background-color 0.3s;
+}
+.button1{
+  background-color: #ffffff;
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 1.2rem;
+  margin-top: 20px;
+  display: inline-block;
+  transition: background-color 0.3s;
+}
+
+
+/* Keyframes for Animations */
+@keyframes spin {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes spin-reverse {
+  from {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 8vw 5vw; /* Reduce padding for smaller screens */
+    font-size: 0.9rem; /* Smaller font size for mobile */
+  }
+
+  .circle-decorations {
+    width: 70vw; /* Smaller size for mobile */
+    height: 70vw;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    font-size: 0.8rem; /* Even smaller font size for extra small screens */
+    padding: 10vw 3vw;
+  }
+
+  .circle-decorations {
+    width: 60vw; /* Further reduce size for smaller devices */
+    height: 60vw;
+  }
+}

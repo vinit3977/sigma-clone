@@ -1,0 +1,66 @@
+
+/* About Us Section */
+.about-us-section {
+    background-color: #002E50;
+    color: #ffffff;
+    }
+    
+    .about-us-section .image-wrapper {
+    overflow: hidden;
+    border-radius: 20px;
+    }
+    
+    .about-us-section .image-wrapper img {
+    width: 50%;
+    border-radius: 20px;
+    object-fit: cover;
+    }
+    
+    .about-us-section .badge-section {
+    background: #ffffff;
+    padding: 8px 15px;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    font-size: 1rem;
+    color: #002E50;
+    }
+    
+    .about-us-section .badge-section img {
+    width: 20px;
+    height: 20px;
+    }
+    
+    .about-us-section .badge-title {
+    font-weight: bold;
+    }
+    
+    .about-us-section .section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #FFB84D;
+    margin-bottom: 15px;
+    }
+    
+    .about-us-section p {
+    color: #B3C2D1;
+    line-height: 1.8;
+    }
+    
+    .about-us-section .btn-primary {
+    background-color: #FFB84D;
+    border: none;
+    color: #002E50;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 30px;
+    transition: 0.3s;
+    }
+    
+    .about-us-section .btn-primary:hover {
+    background-color: #FFA500;
+    color: #ffffff;
+    }
+
+   
+  

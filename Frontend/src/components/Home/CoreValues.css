@@ -1,0 +1,113 @@
+/* Core values */
+.core-values {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 80px 0;
+  }
+  
+  .core-value-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(45deg, #2d3436 30%, #636e72 90%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1.5rem;
+  }
+  
+  .core-value-description {
+    font-size: 1.25rem;
+    color: #636e72;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.8;
+  }
+  
+  /* Core Value Card Container */
+  .core-value-card {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 2rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: left;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  
+  /* Icon Wrapper */
+  .core-value-card .icon-wrapper {
+    background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
+    border-radius: 15px;
+    color: #fff;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+  }
+  
+  .core-value-card .icon-wrapper i {
+    font-size: 1.8rem;
+    line-height: 1;
+  }
+  
+  /* Card Text */
+  .core-value-card h5 {
+    font-size: 1.5rem;
+    color: #2d3436;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  
+  .core-value-card p {
+    font-size: 1rem;
+    color: #636e72;
+    line-height: 1.7;
+    margin: 0;
+  }
+  
+  /* Card Hover Effects */
+  .core-value-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 1);
+  }
+  
+  .core-value-card:hover .icon-wrapper {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 10px 20px rgba(0, 184, 148, 0.2);
+  }
+  
+  /* Flexbox for Equal Heights */
+  .row.g-4 {
+    margin-top: 2rem;
+  }
+  
+  /* Media Queries for Responsive Design */
+  @media (max-width: 768px) {
+    .core-values {
+      padding: 60px 0;
+    }
+    .core-value-title {
+      font-size: 2.5rem;
+    }
+    .core-value-description {
+      font-size: 1.1rem;
+      padding: 0 1rem;
+    }
+    .core-value-card {
+      padding: 1.5rem;
+    }
+    .core-value-card .icon-wrapper {
+      width: 60px;
+      height: 60px;
+    }
+    .core-value-card .icon-wrapper i {
+      font-size: 1.5rem;
+    }
+  }

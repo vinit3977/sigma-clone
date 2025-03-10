@@ -1,0 +1,242 @@
+/* Our Skills Section */
+.our-skills-section {
+    background-color: #F8F9FA;
+    color: #002E50;
+    }
+    
+    .section-subtitle {
+    color: #FF5733;
+    font-size: 1rem;
+    font-weight: bold;
+    }
+    
+    .section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #002E50;
+    margin-bottom: 20px;
+    }
+    
+    .skills-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+    }
+    
+    .skills-list li {
+    color: #555;
+    margin-bottom: 10px;
+    }
+    
+    .image-wrapper {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    }
+    
+    .image-wrapper img {
+    width: 100%;
+    border-radius: 20px;
+    }
+    
+    .play-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #FF5733;
+    color: #FFF;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .progress-bars .progress-item {
+    margin-bottom: 20px;
+    }
+    
+    .progress-item .title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    }
+    
+    .progress {
+    background-color: #E0E0E0;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 10px;
+    }
+    
+    .progress-bar {
+    background-color: #FF5733;
+    height: 10px;
+    width: 0;
+    transition: width 1.5s ease-in-out;
+    }
+    /* Animate on scroll */
+    .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s ease, transform 1s ease;
+    }
+    
+    .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+    }
+    
+    /* Button hover animations */
+    .btn {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Navbar animations */
+    .navbar {
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .navbar.scrolled {
+    background-color: #003366 !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Image hover effect */
+    .image-wrapper img {
+    transition: transform 0.4s ease;
+    }
+    
+    .image-wrapper:hover img {
+    transform: scale(1.1);
+    }
+    
+    .progress-bar {
+      position: relative;
+      background-color: #ffc107;
+      transition: width 3s ease;
+    }
+    
+    .progress-number {
+      position: absolute;
+      right: 10px;
+      top: 500%;
+      transform: translateY(-50%);
+      color: #fff;
+      font-weight: bold;
+    }
+    
+    .play-icon i {
+      font-size: 2rem;
+      color: #fff;
+    }
+    
+    .play-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 50%;
+      padding: 10px;
+      cursor: pointer;
+    }
+    
+    .play-icon:hover {
+      background: rgba(0, 0, 0, 0.8);
+    }
+
+
+     /* General Reset */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+}
+
+.banner-section {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  background: url('/src/assets/banner.png') no-repeat center center/cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  overflow: hidden;
+}
+
+/* Dark overlay effect */
+.banner-section .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(18, 32, 71, 0.8); /* Blue overlay with opacity */
+  z-index: 1;
+}
+
+/* Content Section */
+.content {
+  position: relative;
+  z-index: 2;
+  text-align: left;
+  width: 80%;
+  max-width: 1200px;
+}
+
+.content h4 {
+  margin: 0;
+  font-size: 1rem;
+  text-transform: uppercase;
+  color: #d1d1d1; /* Light gray */
+  letter-spacing: 2px;
+}
+
+.content h1 {
+  color: #fff;
+  margin: 10px 0;
+  font-size: 2.5rem;
+  line-height: 1.2;
+  font-weight: bold;
+}
+
+.cta-button {
+  margin-top: 20px;
+  padding: 12px 24px;
+  background-color: #ff7e29;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.3s ease-in-out;
+}
+
+.cta-button:hover {
+  background-color: #ff9c50;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .content h1 {
+  
+    font-size: 1.8rem;
+  }
+
+  .cta-button {
+    font-size: 0.9rem;
+  }
+}

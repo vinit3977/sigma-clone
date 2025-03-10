@@ -1,0 +1,63 @@
+/* Network Marketing Section */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%; /* Ensure the body and html take full height */
+  }
+  
+  .network-marketing-section {
+    background-color: #f9f9f9;
+    padding: 10px; /* Adjust padding as needed */
+    display: flex; /* Enables flexbox */
+    flex-direction: column; /* Stack children vertically */
+    align-items: center; /* Centers content horizontally */
+    justify-content: center; /* Centers content vertically */
+    height: 100vh; /* Full viewport height */
+    box-sizing: border-box; /* Includes padding in height calculation */
+    text-align: center; /* Centers text */
+  }
+  
+  .network-marketing-section h2 {
+    font-weight: 700;
+    color: #000000;
+    margin-bottom: 20px; /* Adds spacing */
+  }
+  
+  .image-grid {
+    display: grid; /* Enables grid layout */
+    grid-template-columns: repeat(4, 2fr); /* 3 equal columns */
+    gap: 20px; /* Space between grid items */
+    width: 100%; /* Full width */
+    max-width: 800px; /* Limit max width */
+    justify-items: center; /* Center images horizontally */
+  }
+  
+  .image-grid img {
+    max-height: 50px;
+    object-fit: contain;
+    width: 100%; /* Make images responsive */
+    max-width: 50px; /* Set max width for images */
+  }
+  
+  .network-marketing-section h5 {
+    margin-top: 20px;
+    font-weight: 600;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .image-grid {
+      grid-template-columns: repeat(2, 1fr); /* Switch to 2 columns on smaller screens */
+    }
+  
+    .image-grid img {
+      max-height: 50px; /* Adjust image size */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .image-grid {
+      grid-template-columns: 1fr; /* Single column for very small screens */
+    }
+  }
+  
