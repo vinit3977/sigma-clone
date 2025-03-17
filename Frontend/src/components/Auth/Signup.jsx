@@ -41,7 +41,7 @@ const Signup = () => {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:5000/register', {
+      const response = await fetch('http://localhost:5000/api/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -54,8 +54,6 @@ const Signup = () => {
       });
 
       const data = await response.json();
-      console.log(data);
-      
 
       if (!response.ok) {
         throw new Error(data.message || 'Registration failed');
@@ -74,11 +72,6 @@ const Signup = () => {
   return (
     <div className="auth-container">
       <div className="auth-card">
-        <div className="auth-header">
-          <h2>Create Account</h2>
-          <p>Join our learning community</p>
-        </div>
-
         {error && <div className="auth-error">{error}</div>}
 
         <form onSubmit={handleSubmit} className="auth-form">
@@ -151,14 +144,11 @@ const Signup = () => {
               "Sign Up"
             )}
           </button>
-        </form>
 
-        <div className="auth-footer">
-          <p>Already have an account?</p>
-          <Link to="/login" className="auth-link">
-            Login here
+          <Link to="/login" className="auth-switch-link">
+            Already have an account? Login
           </Link>
-        </div>
+        </form>
       </div>
     </div>
   );

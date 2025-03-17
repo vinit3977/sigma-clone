@@ -3,61 +3,176 @@ body, html {
     margin: 0;
     padding: 0;
     height: 100%; /* Ensure the body and html take full height */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
   }
   
   .network-marketing-section {
-    background-color: #f9f9f9;
-    padding: 10px; /* Adjust padding as needed */
-    display: flex; /* Enables flexbox */
-    flex-direction: column; /* Stack children vertically */
-    align-items: center; /* Centers content horizontally */
-    justify-content: center; /* Centers content vertically */
-    height: 100vh; /* Full viewport height */
-    box-sizing: border-box; /* Includes padding in height calculation */
-    text-align: center; /* Centers text */
+    background: linear-gradient(135deg, #f6f9fc 0%, #ffffff 100%);
+    padding: 120px 0;
+    min-height: 100vh;
+    box-sizing: border-box;
+    position: relative;
   }
   
-  .network-marketing-section h2 {
-    font-weight: 700;
-    color: #000000;
-    margin-bottom: 20px; /* Adds spacing */
+  .network-marketing-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background: linear-gradient(90deg, #3498db, #2ecc71, #3498db);
+    background-size: 200% 100%;
+    animation: gradientMove 5s ease infinite;
   }
   
-  .image-grid {
-    display: grid; /* Enables grid layout */
-    grid-template-columns: repeat(4, 2fr); /* 3 equal columns */
-    gap: 20px; /* Space between grid items */
-    width: 100%; /* Full width */
-    max-width: 800px; /* Limit max width */
-    justify-items: center; /* Center images horizontally */
+  @keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
   
-  .image-grid img {
-    max-height: 50px;
-    object-fit: contain;
-    width: 100%; /* Make images responsive */
-    max-width: 50px; /* Set max width for images */
+  .section-title {
+    text-align: center;
+    margin-bottom: 70px;
+    position: relative;
   }
   
-  .network-marketing-section h5 {
-    margin-top: 20px;
-    font-weight: 600;
+  .section-title h2 {
+    font-size: 3rem;
+    font-weight: 900;
+    background: linear-gradient(45deg, #1a1a1a );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+  }
+  
+  .section-title p {
+    font-size: 1.2rem;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.8;
+  }
+  
+  .skill-card {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 40px 30px;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    border: 2px solid transparent;
+  }
+  
+  .skill-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 20px;
+    padding: 2px;
+    background: linear-gradient(45deg, #3498db, #2ecc71);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  
+  .skill-card:hover {
+    transform: translateY(-15px) scale(1.03);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  }
+  
+  .skill-card:hover::before {
+    opacity: 1;
+  }
+  
+  .skill-card img {
+    width: 90px;
+    height: 90px;
+    margin-bottom: 30px;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.1));
+  }
+  
+  .skill-card:hover img {
+    transform: scale(1.2) rotate(5deg);
+  }
+  
+  .skill-card h5 {
+    color: #1a1a1a;
+    font-weight: 800;
+    font-size: 1.4rem;
+    margin: 20px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    padding-bottom: 15px;
+  }
+  
+  .skill-card h5::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 3px;
+    background: linear-gradient(90deg, #3498db, #2ecc71);
+    border-radius: 2px;
+  }
+  
+  .skill-card p {
+    color: #555;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    margin-bottom: 0;
   }
   
   /* Responsive Design */
   @media (max-width: 768px) {
-    .image-grid {
-      grid-template-columns: repeat(2, 1fr); /* Switch to 2 columns on smaller screens */
+    .network-marketing-section {
+      padding: 80px 0;
     }
-  
-    .image-grid img {
-      max-height: 50px; /* Adjust image size */
+    
+    .section-title h2 {
+      font-size: 2.5rem;
+    }
+    
+    .skill-card {
+      margin-bottom: 40px;
+      padding: 30px 25px;
     }
   }
   
   @media (max-width: 480px) {
-    .image-grid {
-      grid-template-columns: 1fr; /* Single column for very small screens */
+    .section-title h2 {
+      font-size: 2rem;
+    }
+    
+    .section-title p {
+      font-size: 1.1rem;
+    }
+    
+    .skill-card {
+      padding: 25px 20px;
+    }
+    
+    .skill-card h5 {
+      font-size: 1.2rem;
+    }
+    
+    .skill-card p {
+      font-size: 1rem;
     }
   }
   

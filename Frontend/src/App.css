@@ -1,0 +1,31 @@
+/* Global styles for proper scrolling */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  position: relative;
+  overflow-y: auto !important; /* Force vertical scrolling */
+}
+
+/* Mobile-specific styles */
+body.mobile-view {
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+}
+
+/* Fix for fixed elements */
+.mobile-view .fixed-element {
+  position: absolute;
+}
+
+/* Ensure content is scrollable */
+#root {
+  min-height: 100%;
+  position: relative;
+}
+
+/* Existing styles below */

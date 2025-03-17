@@ -163,7 +163,7 @@
 .contact-underline {
   width: 40px;
   height: 2px;
-  background: #ff6600;
+  /* background: #ff6600; */
   margin-left: auto;
   margin-top: 20px;
 }
@@ -278,7 +278,7 @@
   /* Center the contact underline on smaller screens */
   .contact-underline {
     margin-right: auto;
-  }
+  } 
 
   .contact-item {
     justify-content: center;

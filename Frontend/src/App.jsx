@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router";
+import { Routes, Route, useLocation } from "react-router";
 import Home from "./components/Home/Home";
 import AboutUs from "./components/AboutUs/AboutUs";
 import ContactUs from "./components/ContactUS/ContactUs";
@@ -17,44 +17,63 @@ import { AuthProvider } from "./components/AuthContext/AuthContext";
 import { CartProvider } from "./components/Courses/CartContext";
 import Cart from "./components/Courses/Cart";
 import Checkout from "./components/Courses/Checkout";
+import { useEffect } from "react";
+import { LoadingProvider } from "./components/LoadingContext/LoadingContext";
+import { useLoading } from "./components/LoadingContext/LoadingContext";
+import Loader from "./components/Loader/Loader";
+
+function AppContent() {
+  const location = useLocation();
+  const { isLoading } = useLoading();
+
+  useEffect(() => {
+    document.body.style.overflow = 'auto';
+    
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        document.body.classList.add('mobile-view');
+      } else {
+        document.body.classList.remove('mobile-view');
+      }
+    };
+    
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  return (
+    <>
+      {isLoading && <Loader />}
+      {location.pathname !== "/login" && location.pathname !== "/signup" && <Header />}
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<AboutUs />} />
+        <Route path="/contact" element={<ContactUs />} />
+        <Route path="/OnlineTraining" element={<OnlineTraining />} />
+        <Route path="/Corporate" element={<Corporate />} />
+        <Route path="/ITstaffing" element={<ITstaffing />} />
+        <Route path="/courses" element={<Courses />} />
+        {/* <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} /> */}
+      </Routes>
+      {location.pathname !== "/login" && location.pathname !== "/signup" && <Footer />}
+    </>
+  );
+}
 
 function App() {
   return (
     <AuthProvider>
       <CartProvider>
-        <Header />
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-        
-          <Route
-            path="/admin"
-            element={
-              <ProtectedRoute>
-                <AdminDashboard />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route path="/" element={<Home />} />
-          
-          <Route path="/about" element={<AboutUs />} />
-          <Route path="/contact" element={<ContactUs />} />
-          <Route path="/OnlineTraining" element={<OnlineTraining />} />
-          <Route path="/Corporate" element={<Corporate />} />
-          <Route path="/ITstaffing" element={<ITstaffing />} />
-          <Route
-            path="/courses"
-            element={
-              // <ProtectedRoute>
-                <Courses />
-              // </ProtectedRoute>
-            }
-          />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/checkout" element={<Checkout />} />
-        </Routes>
-        <Footer />
+        <LoadingProvider>
+          <AppContent />
+        </LoadingProvider>
       </CartProvider>
     </AuthProvider>
   );

@@ -1,8 +1,18 @@
+/* Add smooth scrolling to the entire document */
+:root {
+    scroll-behavior: smooth;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
 /* Main Dashboard Layout */
 .admin-dashboard {
     padding: 2rem;
     background: #f6f8fd;
     min-height: 100vh;
+    scroll-behavior: smooth;
 }
 
 /* Header Section */
@@ -149,6 +159,7 @@
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 2rem;
     margin-top: 2rem;
+    scroll-behavior: smooth;
 }
 
 /* Course Item Styling */
@@ -367,6 +378,7 @@
 .users-list {
     display: grid;
     gap: 1rem;
+    scroll-behavior: smooth;
 }
 
 .user-item {
@@ -386,4 +398,90 @@
 .user-info p {
     margin: 0.5rem 0 0;
     color: #7f8c8d;
+}
+
+/* Error Message Styling */
+.error-message {
+    background-color: #fee2e2;
+    border: 1px solid #ef4444;
+    color: #dc2626;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+/* Loading Message Styling */
+.loading-message {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+    font-size: 1.1rem;
+}
+
+/* No Courses Message Styling */
+.no-courses-message {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+    font-size: 1.1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+/* Form Validation Styles */
+.form-container input:invalid,
+.form-container textarea:invalid {
+    border-color: #ef4444;
+}
+
+.form-container input:focus:invalid,
+.form-container textarea:focus:invalid {
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+/* Disabled Button Styles */
+.form-container button:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.form-container button:disabled:hover {
+    background: #94a3b8;
+    transform: none;
+}
+
+/* Loading Spinner */
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.loading-spinner {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 0.6s linear infinite;
+    margin-right: 0.5rem;
+}
+
+/* Required Field Indicator */
+.form-group label::after {
+    content: "*";
+    color: #ef4444;
+    margin-left: 4px;
+}
+
+/* Success Message Styling */
+.success-message {
+    background-color: #dcfce7;
+    border: 1px solid #22c55e;
+    color: #16a34a;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
 }

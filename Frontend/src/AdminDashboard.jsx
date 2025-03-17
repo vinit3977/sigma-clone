@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import io from "socket.io-client";
 import "./AdminDashboard.css";
+
 
 function AdminDashboard() {
     const navigate = useNavigate();
@@ -12,6 +14,7 @@ function AdminDashboard() {
         // activeEnrollments: 0,
         // totalRevenue: 0
     });
+    const [socket, setSocket] = useState(null);
     
     // Form states
     const [title, setTitle] = useState("");
@@ -31,7 +34,17 @@ function AdminDashboard() {
     const [searchTerm, setSearchTerm] = useState("");
     const [filterCategory, setFilterCategory] = useState("all");
 
+    const [loading, setLoading] = useState({
+        courses: false,
+        users: false,
+        form: false
+    });
+    const [error, setError] = useState("");
+
     const token = localStorage.getItem("token");
+    const config = {
+        headers: { Authorization: `Bearer ${token}` }
+    };
 
     const categories = [
         "Cloud Computing",
@@ -48,29 +61,74 @@ function AdminDashboard() {
     ];
 
     useEffect(() => {
+        if (!token) {
+            navigate("/login");
+            return;
+        }
+
+        // Initialize socket connection
+        const newSocket = io("http://localhost:5000", {
+            auth: {
+                token
+            }
+        });
+
+        setSocket(newSocket);
+
+        // Listen for real-time updates
+        newSocket.on("statsUpdate", (newStats) => {
+            setStats(prevStats => ({
+                ...prevStats,
+                ...newStats
+            }));
+        });
+
+        newSocket.on("courseUpdate", () => {
+            fetchCourses();
+            fetchDashboardData();
+        });
+
+        newSocket.on("userUpdate", () => {
+            fetchUsers();
+            fetchDashboardData();
+        });
+
         fetchDashboardData();
         fetchCourses();
-    }, []);
+        fetchUsers();
+
+        // Cleanup socket connection
+        return () => {
+            if (newSocket) {
+                newSocket.disconnect();
+            }
+        };
+    }, [navigate]);
 
     const fetchDashboardData = async () => {
         try {
-            const response = await axios.get("http://localhost:5000/api/dashboard/stats", {
-                headers: { Authorization: token }
-            });
+            const response = await axios.get("http://localhost:5000/api/dashboard/stats", config);
             setStats(response.data);
         } catch (error) {
             console.error("Error fetching dashboard data:", error);
+            if (error.response?.status === 401) {
+                handleLogout();
+            }
         }
     };
 
     const fetchCourses = async () => {
+        setLoading(prev => ({ ...prev, courses: true }));
         try {
-            const response = await axios.get("http://localhost:5000/courses", {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            const response = await axios.get("http://localhost:5000/courses", config);
             setCourses(response.data);
         } catch (error) {
             console.error("Error fetching courses:", error);
+            if (error.response?.status === 401) {
+                handleLogout();
+            }
+        } finally {
+            setLoading(prev => ({ ...prev, courses: false }));
         }
     };
 
@@ -87,34 +145,62 @@ function AdminDashboard() {
         navigate("/login");
     };
 
+    const validateForm = () => {
+        if (!title.trim()) {
+            setError("Course title is required");
+            return false;
+        }
+        if (!description.trim()) {
+            setError("Course description is required");
+            return false;
+        }
+        if (!duration.trim()) {
+            setError("Course duration is required");
+            return false;
+        }
+        if (!price || price <= 0) {
+            setError("Valid course price is required");
+            return false;
+        }
+        setError("");
+        return true;
+    };
+
     const addCourse = async (e) => {
         e.preventDefault();
-        const formData = new FormData();
-        formData.append("title", title);
-        formData.append("description", description);
-        formData.append("duration", duration);
-        formData.append("price", price);
-        formData.append("category", category);
-        formData.append("image", image);
-
+        if (!validateForm()) return;
+        
+        setLoading(prev => ({ ...prev, form: true }));
         try {
+            const formData = new FormData();
+            formData.append("title", title);
+            formData.append("description", description);
+            formData.append("duration", duration);
+            formData.append("price", price);
+            formData.append("category", category);
+            if (image) {
+                formData.append("image", image);
+            }
+
             await axios.post("http://localhost:5000/courses", formData, {
-                headers: { 
-                    Authorization: `Bearer ${token}`, // Ensure the token is prefixed with 'Bearer'
+                ...config,
+                headers: {
+                    ...config.headers,
                     "Content-Type": "multipart/form-data"
                 }
             });
+            
             fetchCourses();
-            // Reset form
-            setTitle("");
-            setDescription("");
-            setDuration("");
-            setPrice("");
-            setCategory("Cloud Computing");
-            setImage(null);
-            setPreview("");
+            resetForm();
+            alert("Course added successfully!");
         } catch (error) {
             console.error("Error adding course:", error);
+            setError(error.response?.data?.message || "Error adding course. Please try again.");
+            if (error.response?.status === 401) {
+                handleLogout();
+            }
+        } finally {
+            setLoading(prev => ({ ...prev, form: false }));
         }
     };
 
@@ -140,41 +226,49 @@ function AdminDashboard() {
     const handleDelete = async (courseId) => {
         if (window.confirm("Are you sure you want to delete this course?")) {
             try {
-                await axios.delete(`http://localhost:5000/courses/${courseId}`, {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
+                await axios.delete(`http://localhost:5000/courses/${courseId}`, config);
                 fetchCourses();
-                alert("Course deleted successfully");
+                alert("Course deleted successfully!");
             } catch (error) {
                 console.error("Error deleting course:", error);
-                alert("Error deleting course");
+                alert(error.response?.data?.message || "Error deleting course. Please try again.");
+                if (error.response?.status === 401) {
+                    handleLogout();
+                }
             }
         }
     };
 
     const handleUpdate = async (e) => {
         e.preventDefault();
-        const formData = new FormData();
-        formData.append("title", title);
-        formData.append("description", description);
-        formData.append("duration", duration);
-        formData.append("price", price);
-        formData.append("category", category);
-        if (image) formData.append("image", image);
-
         try {
+            const formData = new FormData();
+            formData.append("title", title);
+            formData.append("description", description);
+            formData.append("duration", duration);
+            formData.append("price", price);
+            formData.append("category", category);
+            if (image) {
+                formData.append("image", image);
+            }
+
             await axios.put(`http://localhost:5000/courses/${editingCourse._id}`, formData, {
-                headers: { 
-                    Authorization: `Bearer ${token}`,
+                ...config,
+                headers: {
+                    ...config.headers,
                     "Content-Type": "multipart/form-data"
                 }
             });
+            
             fetchCourses();
             resetForm();
-            alert("Course updated successfully");
+            alert("Course updated successfully!");
         } catch (error) {
             console.error("Error updating course:", error);
-            alert("Error updating course");
+            alert(error.response?.data?.message || "Error updating course. Please try again.");
+            if (error.response?.status === 401) {
+                handleLogout();
+            }
         }
     };
 
@@ -193,34 +287,74 @@ function AdminDashboard() {
     // Add user management functions
     const fetchUsers = async () => {
         try {
-            const response = await axios.get("http://localhost:5000/api/users", {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            const response = await axios.get("http://localhost:5000/api/users", config);
             setUsers(response.data);
         } catch (error) {
             console.error("Error fetching users:", error);
+            if (error.response?.status === 401) {
+                handleLogout();
+            }
         }
     };
 
     const handleDeleteUser = async (userId) => {
         if (window.confirm("Are you sure you want to delete this user?")) {
             try {
-                await axios.delete(`http://localhost:5000/api/users/${userId}`, {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
+                await axios.delete(`http://localhost:5000/api/users/${userId}`, config);
                 fetchUsers();
-                alert("User deleted successfully");
+                alert("User deleted successfully!");
             } catch (error) {
                 console.error("Error deleting user:", error);
-                alert("Error deleting user");
+                alert(error.response?.data?.message || "Error deleting user. Please try again.");
+                if (error.response?.status === 401) {
+                    handleLogout();
+                }
             }
         }
     };
 
+    const verifyAdminAccess = async () => {
+        try {
+            if (!token) {
+                // No token means not logged in, redirect to login
+                window.location.href = '/login';
+                return false;
+            }
+
+            const response = await fetch('http://localhost:5000/api/auth/verify-admin', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            const data = await response.json();
+
+            if (!data.isAdmin) {
+                // Not an admin, redirect to login
+                window.location.href = '/login';
+                return false;
+            }
+
+            return true;
+        } catch (error) {
+            console.error('Error verifying admin access:', error);
+            window.location.href = '/login';
+            return false;
+        }
+    };
+
     useEffect(() => {
-        fetchUsers();
+        const checkAdminAccess = async () => {
+            const hasAccess = await verifyAdminAccess();
+            if (!hasAccess) {
+                return; // Will redirect to login if not admin
+            }
+            // Load admin dashboard content
+        };
+
+        checkAdminAccess();
     }, []);
-    
+
     return (
         <div className="admin-dashboard">
             <div className="dashboard-header">
@@ -277,12 +411,14 @@ function AdminDashboard() {
                 <div className="course-management">
                     <form className="form-container" onSubmit={isEditing ? handleUpdate : addCourse}>
                         <h2>{isEditing ? "Update Course" : "Add New Course"}</h2>
+                        {error && <div className="error-message">{error}</div>}
                         <div className="form-group">
                             <input
                                 type="text"
                                 placeholder="Course Title"
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
+                                required
                             />
                         </div>
                         <div className="form-group">
@@ -327,11 +463,11 @@ function AdminDashboard() {
                             {preview && <img src={preview} alt="Preview" width="100" />}
                         </div>
                         <div className="form-actions">
-                            <button type="submit">
-                                {isEditing ? "Update Course" : "Add Course"}
+                            <button type="submit" disabled={loading.form}>
+                                {loading.form ? "Processing..." : (isEditing ? "Update Course" : "Add Course")}
                             </button>
                             {isEditing && (
-                                <button type="button" className="cancel-btn" onClick={resetForm}>
+                                <button type="button" className="cancel-btn" onClick={resetForm} disabled={loading.form}>
                                     Cancel
                                 </button>
                             )}
@@ -359,41 +495,47 @@ function AdminDashboard() {
                     </div>
 
                     <div className="courses-list">
-                        {filteredCourses.map(course => (
-                            <div key={course._id} className="course-item">
-                                <div className="course-image">
-                                    {course.image && (
-                                        <img 
-                                            src={`http://localhost:5000/uploads/${course.image}`}
-                                            alt={course.title}
-                                        />
-                                    )}
-                                </div>
-                                <div className="course-item-content">
-                                    <h4>{course.title}</h4>
-                                    <p className="description">{course.description}</p>
-                                    <div className="course-meta">
-                                        <p>Duration: {course.duration}</p>
-                                        <p>Price: ₹{course.price}</p>
-                                        <p>Category: {course.category}</p>
+                        {loading.courses ? (
+                            <div className="loading-message">Loading courses...</div>
+                        ) : filteredCourses.length === 0 ? (
+                            <div className="no-courses-message">No courses found</div>
+                        ) : (
+                            filteredCourses.map(course => (
+                                <div key={course._id} className="course-item">
+                                    <div className="course-image">
+                                        {course.image && (
+                                            <img 
+                                                src={`http://localhost:5000/uploads/${course.image}`}
+                                                alt={course.title}
+                                            />
+                                        )}
                                     </div>
-                                    <div className="course-actions">
-                                        <button 
-                                            className="edit-button"
-                                            onClick={() => handleEdit(course)}
-                                        >
-                                            <i className="fas fa-edit"></i> Edit
-                                        </button>
-                                        <button 
-                                            className="delete-button"
-                                            onClick={() => handleDelete(course._id)}
-                                        >
-                                            <i className="fas fa-trash"></i> Delete
-                                        </button>
+                                    <div className="course-item-content">
+                                        <h4>{course.title}</h4>
+                                        <p className="description">{course.description}</p>
+                                        <div className="course-meta">
+                                            <p>Duration: {course.duration}</p>
+                                            <p>Price: ₹{course.price}</p>
+                                            <p>Category: {course.category}</p>
+                                        </div>
+                                        <div className="course-actions">
+                                            <button 
+                                                className="edit-button"
+                                                onClick={() => handleEdit(course)}
+                                            >
+                                                <i className="fas fa-edit"></i> Edit
+                                            </button>
+                                            <button 
+                                                className="delete-button"
+                                                onClick={() => handleDelete(course._id)}
+                                            >
+                                                <i className="fas fa-trash"></i> Delete
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))
+                        )}
                     </div>
                 </div>
             ) : (
@@ -419,6 +561,8 @@ function AdminDashboard() {
                     </div>
                 </div>
             )}
+
+            
         </div>
     );
 }

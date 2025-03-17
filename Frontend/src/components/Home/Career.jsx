@@ -4,53 +4,55 @@ import b from "../../assets/Section/b.png";
 import c from "../../assets/Section/c.png";
 import d from "../../assets/Section/d.png";
 
-
 const Career = () => {
+  const skills = [
+    {
+      icon: a,
+      title: "Industry Training",
+      description: "Get hands-on experience with cutting-edge technologies and real industry projects that matter."
+    },
+    {
+      icon: b,
+      title: "Interview Excellence",
+      description: "Master technical interviews with our comprehensive preparation program and expert mentoring."
+    },
+    {
+      icon: c,
+      title: "Expert Mentors",
+      description: "Learn from industry veterans who bring years of real-world experience to your learning journey."
+    },
+    {
+      icon: d,
+      title: "Career Growth",
+      description: "Transform your career with personalized guidance, job placement support, and ongoing mentorship."
+    }
+  ];
+
   return (
-    <div><section className="network-marketing-section fade-in">
-    <div className="container">
-      <h2 className="text-center mb-4">Building Careers in Tech</h2>
-      <div className="row text-center">
-        {/* Practical Training */}
-        <div className="col-lg-3 col-md-6 mb-4">
-          <img 
-            src={a} 
-            alt="Practical training" 
-            className="img-fluid mb-3" 
-          />
-          <h5>Practical Training</h5>
+    <section className="network-marketing-section">
+      <div className="container">
+        <div className="section-title">
+          <h2>Transform Your Career</h2>
+         
         </div>
-        {/* Dedicated Interview Preparation */}
-        <div className="col-lg-3 col-md-6 mb-4">
-          <img 
-            src={b} 
-            alt="Dedicated Interview preparation" 
-            className="img-fluid mb-3" 
-          />
-          <h5>Dedicated Interview Preparation</h5>
-        </div>
-        {/* 10+ Years Experienced Expert */}
-        <div className="col-lg-3 col-md-6 mb-4">
-          <img 
-            src={c} 
-            alt="10+ years experienced Expert" 
-            className="img-fluid mb-3" 
-          />
-          <h5>10+ Years Experienced Expert</h5>
-        </div>
-        {/* Guaranteed Job Assistance */}
-        <div className="col-lg-3 col-md-6 mb-4">
-          <img 
-            src={d}
-            alt="Guaranteed Job Assistance" 
-            className="img-fluid mb-3" 
-          />
-          <h5>Guaranteed Job Assistance</h5>
+        <div className="row justify-content-center">
+          {skills.map((skill, index) => (
+            <div key={index} className="col-lg-3 col-md-6 mb-4">
+              <div className="skill-card text-center">
+                <img 
+                  src={skill.icon} 
+                  alt={skill.title} 
+                  className="img-fluid" 
+                />
+                <h5>{skill.title}</h5>
+                <p>{skill.description}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
-    </div>
-  </section>
-  </div>
-  )
-}
+    </section>
+  );
+};
+
 export default Career;

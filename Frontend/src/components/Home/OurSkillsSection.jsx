@@ -1,119 +1,243 @@
 import './OurSkillsSection.css'; 
 
-import React, { useEffect } from "react";
+import teamDiscussion from "../../assets/PW.png";
+
+import React, { useEffect, useState, useRef } from "react";
+
 
 const OurSkillsSection = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const [activeTab, setActiveTab] = useState('services');
+  const [hoveredCard, setHoveredCard] = useState(null);
+  const statsRef = useRef(null);
+
   useEffect(() => {
-    // Animate progress bars on scroll
-    const handleScroll = () => {
-      const progressBars = document.querySelectorAll(".progress-bar");
-      const section = document.querySelector(".our-skills-section");
-      if (!section) return;
-
-      const sectionTop = section.offsetTop;
-      const sectionHeight = section.offsetHeight;
-      const scrollY = window.scrollY + window.innerHeight;
-
-      if (scrollY > sectionTop && scrollY < sectionTop + sectionHeight) {
-        progressBars.forEach((bar) => {
-          const percentage = bar.getAttribute("data-percentage");
-          bar.style.width = `${percentage}%`;
-        });
-        window.removeEventListener("scroll", handleScroll); // Run only once
-      }
-    };
-
-    // Animate fade-in sections on scroll
-    const handleFadeInScroll = () => {
-      const elements = document.querySelectorAll(".fade-in");
-      elements.forEach((el) => {
-        const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight - 100) {
-          el.classList.add("visible");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setIsVisible(true);
+          if (activeTab === 'expertise') {
+            startCountAnimation();
+          }
         }
-      });
-    };
+      },
+      { threshold: 0.2 }
+    );
 
-    window.addEventListener("scroll", handleScroll);
-    window.addEventListener("scroll", handleFadeInScroll);
+    const section = document.querySelector(".our-skills-section");
+    if (section) {
+      observer.observe(section);
+    }
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("scroll", handleFadeInScroll);
+      if (section) observer.unobserve(section);
     };
-  }, []);
+  }, [activeTab]);
+
+  const startCountAnimation = () => {
+    const stats = document.querySelectorAll('.stat-number');
+    stats.forEach(stat => {
+      const target = parseInt(stat.getAttribute('data-value'));
+      let current = 0;
+      const increment = target / 50;
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          stat.textContent = stat.getAttribute('data-format');
+          clearInterval(timer);
+        } else {
+          stat.textContent = Math.floor(current) + (stat.getAttribute('data-suffix') || '');
+        }
+      }, 30);
+    });
+  };
+
+  const servicesData = [
+    {
+      title: "Enterprise IT Solutions",
+      percentage: 95,
+      description: "Comprehensive enterprise-level IT management",
+      icon: "🏢",
+      features: ["24/7 Support", "Cloud Integration", "Security"],
+      color: "blue"
+    },
+    {
+      title: "Digital Transformation",
+      percentage: 92,
+      description: "End-to-end digital transformation services",
+      icon: "🚀",
+      features: ["Process Automation", "Data Analytics", "Innovation"],
+      color: "orange"
+    },
+    {
+      title: "Custom Development",
+      percentage: 88,
+      description: "Bespoke software solutions for your needs",
+      icon: "💻",
+      features: ["Web Apps", "Mobile Apps", "Enterprise Software"],
+      color: "green"
+    },
+    {
+      title: "Tech Consulting",
+      percentage: 90,
+      description: "Strategic technology consulting services",
+      icon: "📊",
+      features: ["Strategy Planning", "Tech Advisory", "Implementation"],
+      color: "purple"
+    }
+  ];
+
+  const expertiseAreas = [
+    {
+      title: "Cloud Solutions",
+      count: "50+",
+      suffix: "+",
+      value: 50,
+      description: "Successfully Deployed Cloud Projects",
+      icon: "☁️"
+    },
+    {
+      title: "Digital Innovation",
+      count: "200+",
+      suffix: "+",
+      value: 200,
+      description: "Digital Transformation Projects",
+      icon: "💡"
+    },
+    {
+      title: "Client Success",
+      count: "98%",
+      suffix: "%",
+      value: 98,
+      description: "Client Satisfaction Rate",
+      icon: "⭐"
+    },
+    {
+      title: "Global Reach",
+      count: "20+",
+      suffix: "+",
+      value: 20,
+      description: "Countries Served",
+      icon: "🌍"
+    }
+  ];
 
   return (
-    <section className="our-skills-section py-5 fade-in">
-      <div className="container">
-        <div className="row align-items-center">
-          {/* Text Content */}
-          <div className="col-lg-6">
-            <div className="content">
-              <h6 className="section-subtitle">OUR SKILLS</h6>
+    <section className="our-skills-section">
+      <div className="modern-background">
+        <div className="gradient-sphere gradient-1"></div>
+        <div className="gradient-sphere gradient-2"></div>
+        <div className="pattern-grid"></div>
+      </div>
+
+      <div className="container position-relative">
+        <div className="row justify-content-center">
+          <div className="col-lg-8 text-center">
+            <div className={`section-header fade-in ${isVisible ? 'visible' : ''}`}>
+              <span className="section-badge">Our Expertise</span>
               <h2 className="section-title">
-                We Provide IT Services That Are Designed For Growth And Success
-                Of Your Business.
+                Driving Digital Excellence Through Innovation
               </h2>
-              <p className="text-muted">
-                Sigma IT Solutions and Services can be one of the best choices
-                you make to take IT services as we maintain our expertise,
-                cost-effectiveness, scalability, and reliability to satisfy our
-                customers which allows us to focus on our core business
-                objectives while effectively managing your IT needs.
+              <p className="section-subtitle">
+                Empowering businesses with cutting-edge technology solutions and strategic innovations
               </p>
-              <ul className="skills-list">
-                <li>Total Tech Support Solutions</li>
-                <li>Comprehensive Business Solutions Provider</li>
-                <li>Customized ERP Software Development</li>
-                <li>Strategic Brand Identity Development</li>
-              </ul>
-              <a href="#" className="btn btn-primary">
-                Learn More
-              </a>
             </div>
           </div>
+        </div>
 
-          {/* Image and Progress Bars */}
-          <div className="col-lg-6 text-center">
-            <div className="image-wrapper position-relative mb-4">
-              <a
-                href="https://www.youtube.com/watch?v=YOUR_VIDEO_ID"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="play-icon"
+        <div className="row mt-5">
+          <div className="col-12">
+            <div className="tab-navigation">
+              <button 
+                className={`tab-btn ${activeTab === 'services' ? 'active' : ''}`}
+                onClick={() => setActiveTab('services')}
               >
-                <img
-                  src="team-discussion.jpg"
-                  alt="Team Discussion"
-                  className="img-fluid rounded"
-                />
-                <div className="play-icon">
-                  <i className="fas fa-play"></i>
-                </div>
-              </a>
+                <span className="tab-icon">⚡</span>
+                Our Services
+              </button>
+              <button 
+                className={`tab-btn ${activeTab === 'expertise' ? 'active' : ''}`}
+                onClick={() => setActiveTab('expertise')}
+              >
+                <span className="tab-icon">📈</span>
+                Key Metrics
+              </button>
             </div>
-            <div className="progress-bars">
-              {[
-                { title: "Managed Services", percentage: 90 },
-                { title: "Business One Solutions", percentage: 95 },
-                { title: "ERP Development", percentage: 80 },
-                { title: "Branding Solutions", percentage: 80 },
-              ].map((item, index) => (
-                <div className="progress-item mb-3" key={index}>
-                  <span className="title">{item.title}</span>
-                  <div className="progress">
-                    <div
-                      className="progress-bar"
-                      style={{ width: "0%" }}
-                      data-percentage={item.percentage}
-                    >
-                      <span className="progress-number">0%</span>
+          </div>
+        </div>
+
+        <div className="content-wrapper">
+          {activeTab === 'services' ? (
+            <div className="row services-grid">
+              {servicesData.map((service, index) => (
+                <div 
+                  className="col-lg-6 mb-4" 
+                  key={index}
+                  onMouseEnter={() => setHoveredCard(index)}
+                  onMouseLeave={() => setHoveredCard(null)}
+                >
+                  <div className={`service-card fade-in ${isVisible ? 'visible' : ''} ${service.color}`}>
+                    <div className="service-header">
+                      <div className="service-icon">{service.icon}</div>
+                      <h3 className="service-title">{service.title}</h3>
+                    </div>
+                    <p className="service-description">{service.description}</p>
+                    <div className="progress-wrapper">
+                      <div className="progress">
+                        <div 
+                          className="progress-bar"
+                          style={{ 
+                            width: isVisible ? `${service.percentage}%` : '0%',
+                            background: hoveredCard === index ? 'linear-gradient(90deg, #FF5733, #ff7e57)' : ''
+                          }}
+                        >
+                          <span className="progress-label">{service.percentage}%</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="features-list">
+                      {service.features.map((feature, idx) => (
+                        <span key={idx} className="feature-tag">
+                          <span className="feature-dot"></span>
+                          {feature}
+                        </span>
+                      ))}
                     </div>
                   </div>
                 </div>
               ))}
             </div>
+          ) : (
+            <div className="row expertise-stats" ref={statsRef}>
+              {expertiseAreas.map((area, index) => (
+                <div className="col-lg-3 col-md-6 mb-4" key={index}>
+                  <div className={`stat-card fade-in ${isVisible ? 'visible' : ''}`}>
+                    <div className="stat-icon">{area.icon}</div>
+                    <h3 
+                      className="stat-number" 
+                      data-value={area.value}
+                      data-suffix={area.suffix}
+                      data-format={area.count}
+                    >
+                      0{area.suffix}
+                    </h3>
+                    <h4 className="stat-title">{area.title}</h4>
+                    <p className="stat-description">{area.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="row mt-5">
+          <div className="col-12 text-center">
+            <a href="#contact" className="cta-button">
+              <span>Start Your Digital Journey</span>
+              <svg className="arrow-icon" viewBox="0 0 24 24">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
           </div>
         </div>
       </div>

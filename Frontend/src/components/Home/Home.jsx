@@ -17,7 +17,7 @@ import Clients from './Clients';
       
 <DataSection/>
 <Career/>
-<Bcareer/>
+{/* <Bcareer/> */}
 <OurSkillsSection/>
 <BannerSection/>
 <CoreValues/>

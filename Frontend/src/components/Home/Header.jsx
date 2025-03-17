@@ -49,11 +49,15 @@ const Header = () => {
       }
       if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target)) {
         setMobileMenuOpen(false);
+        document.body.style.overflow = 'auto'; // Ensure body scrolling is restored
       }
     };
 
     document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.body.style.overflow = 'auto'; // Reset overflow when component unmounts
+    };
   }, []);
 
   const handleLogout = async () => {
@@ -63,6 +67,8 @@ const Header = () => {
       localStorage.removeItem("userData");
       setIsLoggedIn(false);
       setUserData(null);
+      setMobileMenuOpen(false);
+      document.body.style.overflow = 'auto'; // Reset overflow when logging out
       navigate("/");
     } catch (error) {
       console.error('Failed to log out:', error);
@@ -74,7 +80,7 @@ const Header = () => {
     if (!mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = 'auto'; // Changed from 'unset' to 'auto' for better compatibility
     }
   };
 
@@ -90,6 +96,7 @@ const Header = () => {
     setServicesDropdownOpen(false);
     setMobileServicesOpen(false);
     setMobileMenuOpen(false);
+    document.body.style.overflow = 'auto'; // Reset overflow when navigating
     navigate(path);
   };
 
@@ -97,6 +104,7 @@ const Header = () => {
     setUserDropdownOpen(false);
     setMobileUserOpen(false);
     setMobileMenuOpen(false);
+    document.body.style.overflow = 'auto'; // Reset overflow when navigating
     navigate(path);
   };
 
@@ -134,7 +142,7 @@ const Header = () => {
                 </Link>
                 <div className="dropdown" ref={servicesDropdownRef}>
                   <button 
-                    className="nav-link dropdown-toggle"
+                    className="nav-link dropdown"
                     onClick={() => setServicesDropdownOpen(!servicesDropdownOpen)}
                   >
                     <i className="fas fa-cogs"></i>
@@ -267,6 +275,15 @@ const Header = () => {
 
       {/* Mobile Menu */}
       <div className={`mobile-nav ${mobileMenuOpen ? 'show' : ''}`} ref={mobileMenuRef}>
+        <button className="mobile-close-btn" onClick={toggleMobileMenu}>
+          <i className="fas fa-times"></i>
+        </button>
+        
+        {/* Logo in mobile menu */}
+        <div className="mobile-logo">
+          <img src={SITLogo} alt="Sigma Academy Logo" />
+        </div>
+        
         <div className="mobile-nav-links">
           <Link to="/" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>
             <i className="fas fa-home"></i>
@@ -308,14 +325,18 @@ const Header = () => {
               </button>
             </div>
           </div>
-
+          
           <Link to="/about" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>
             <i className="fas fa-info-circle"></i>
-            About
+            About Us
+          </Link>
+          <Link to="/courses" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>
+            <i className="fas fa-graduation-cap"></i>
+            Courses
           </Link>
           <Link to="/contact" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>
             <i className="fas fa-envelope"></i>
-            Contact
+            Contact Us
           </Link>
         </div>
 
@@ -323,14 +344,20 @@ const Header = () => {
           {isLoggedIn && userData ? (
             <>
               <div className="mobile-user-section">
-                <div className="user-avatar">
-                  {userData.username?.charAt(0).toUpperCase()}
+                <div className="mobile-user-info">
+                  <div className="mobile-user-avatar">
+                    {userData.username?.charAt(0).toUpperCase()}
+                  </div>
+                  <div className="mobile-user-name">{userData.username}</div>
                 </div>
-                <span className="user-name">{userData.username}</span>
                 <button 
                   className="mobile-dropdown-toggle"
                   onClick={toggleMobileUser}
                 >
+                  <span>
+                    <i className="fas fa-user-circle"></i>
+                    My Account
+                  </span>
                   <i className={`fas fa-chevron-down ${mobileUserOpen ? 'rotate' : ''}`}></i>
                 </button>
               </div>

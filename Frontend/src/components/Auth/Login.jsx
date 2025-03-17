@@ -41,14 +41,10 @@ const Login = () => {
         throw new Error(data.message || 'Login failed');
       }
 
-      // Store token and user data
       localStorage.setItem('token', data.token);
       localStorage.setItem('userData', JSON.stringify(data.user));
-
-      // // Update auth context
       login(data.user);
 
-      // Redirect based on role
       if (data.user.role === 'admin') {
         navigate('/admin');
       } else {
@@ -64,18 +60,16 @@ const Login = () => {
   return (
     <div className="auth-container">
       <div className="auth-card">
-        <div className="auth-header">
-          <h2>Welcome Back!</h2>
-          <p>Please login to your account</p>
-        </div>
-
+        <h1 className="auth-title">Welcome Back</h1>
+        <p className="auth-subtitle">Please sign in to your account</p>
+        
         {error && <div className="auth-error">{error}</div>}
 
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">
             <label>
               <i className="fas fa-envelope"></i>
-              Email
+              Email Address
             </label>
             <input
               type="email"
@@ -105,20 +99,17 @@ const Login = () => {
           <button type="submit" className="auth-button" disabled={loading}>
             {loading ? (
               <span className="loading-spinner">
-                <i className="fas fa-spinner fa-spin"></i> Logging in...
+                <i className="fas fa-spinner fa-spin"></i> Signing in...
               </span>
             ) : (
-              "Login"
+              "Sign In"
             )}
           </button>
-        </form>
-
-        <div className="auth-footer">
-          <p>Don't have an account?</p>
-          <Link to="/signup" className="auth-link">
-            Sign up here
+          
+          <Link to="/signup" className="auth-switch-link">
+            Don't have an account? <span>Sign up</span>
           </Link>
-        </div>
+        </form>
       </div>
     </div>
   );
