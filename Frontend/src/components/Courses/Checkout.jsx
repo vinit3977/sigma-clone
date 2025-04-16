@@ -15,6 +15,10 @@ function Checkout() {
         name: '',
         email: ''
     });
+    const [errors, setErrors] = useState({
+        name: '',
+        email: ''
+    });
 
     useEffect(() => {
         const fetchUserDetails = async () => {
@@ -23,7 +27,7 @@ function Checkout() {
                     `http://localhost:5000/api/users/profile`,
                     {
                         headers: {
-                            Authorization: `Bearer ${localStorage.getItem('userToken')}`
+                            Authorization: `Bearer ${localStorage.getItem('token')}`
                         }
                     }
                 );
@@ -49,87 +53,73 @@ function Checkout() {
         }
     }, [user]);
 
+    const validateField = (name, value) => {
+        let error = '';
+        switch (name) {
+            case 'name':
+                if (!value.trim()) {
+                    error = 'Name is required';
+                } else if (value.length < 2) {
+                    error = 'Name must be at least 2 characters';
+                }
+                break;
+            case 'email':
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!value.trim()) {
+                    error = 'Email is required';
+                } else if (!emailRegex.test(value)) {
+                    error = 'Please enter a valid email';
+                }
+                break;
+            default:
+                break;
+        }
+        return error;
+    };
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({
             ...prev,
             [name]: value
         }));
-    };
-
-    const initializeRazorpay = () => {
-        return new Promise((resolve) => {
-            const script = document.createElement('script');
-            script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-            script.onload = () => resolve(true);
-            script.onerror = () => resolve(false);
-            document.body.appendChild(script);
-        });
+        
+        // Validate field
+        const error = validateField(name, value);
+        setErrors(prev => ({
+            ...prev,
+            [name]: error
+        }));
     };
 
     const handlePayment = async () => {
         try {
             setLoading(true);
-            const res = await initializeRazorpay();
-
-            if (!res) {
-                alert('Razorpay SDK failed to load');
+            
+            // Validate cart is not empty
+            if (!cart || cart.length === 0) {
+                alert('Your cart is empty');
                 return;
             }
 
-            const { data } = await axios.post(
-                'http://localhost:5000/api/payment/create-order',
-                { amount: total * 100 },
-                {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem('userToken')}`
+            // Generate order ID
+            const orderId = Math.random().toString(36).substr(2, 9).toUpperCase();
+            
+            // Navigate to payment page with order details
+            navigate('/payment', {
+                state: {
+                    orderId: orderId,
+                    courses: cart,
+                    amount: total,
+                    userDetails: {
+                        name: formData.name,
+                        email: formData.email
                     }
                 }
-            );
-
-            const options = {
-                key: process.env.REACT_APP_RAZORPAY_KEY_ID,
-                amount: data.amount,
-                currency: data.currency,
-                order_id: data.id,
-                name: 'Course Purchase',
-                description: 'Thank you for purchasing the course',
-                handler: async (response) => {
-                    try {
-                        await axios.post(
-                            'http://localhost:5000/api/payment/verify',
-                            {
-                                orderCreationId: data.id,
-                                razorpayPaymentId: response.razorpay_payment_id,
-                                razorpayOrderId: response.razorpay_order_id,
-                                razorpaySignature: response.razorpay_signature,
-                                courses: cart.map(course => course._id)
-                            },
-                            {
-                                headers: {
-                                    Authorization: `Bearer ${localStorage.getItem('userToken')}`
-                                }
-                            }
-                        );
-                        clearCart();
-                        navigate('/profile');
-                    } catch (error) {
-                        console.error('Payment verification failed:', error);
-                    }
-                },
-                prefill: {
-                    name: formData.name,
-                    email: formData.email
-                },
-                theme: {
-                    color: '#3498db'
-                }
-            };
-
-            const paymentObject = new window.Razorpay(options);
-            paymentObject.open();
+            });
         } catch (error) {
             console.error('Payment initiation failed:', error);
+            alert('Failed to initiate payment. Please try again.');
         } finally {
             setLoading(false);
         }
@@ -145,13 +135,13 @@ function Checkout() {
                     </div>
                     <h1>Complete Your Purchase</h1>
                     <p className="hero-subtitle">Your learning journey starts here</p>
-                    <div className="checkout-breadcrumb">
+                    {/* <div className="checkout-breadcrumb">
                         <span>Home</span>
                         <i className="fas fa-chevron-right"></i>
                         <span>Cart</span>
                         <i className="fas fa-chevron-right"></i>
                         <span className="active">Checkout</span>
-                    </div>
+                    </div> */}
                 </div>
             </div>
 
@@ -163,7 +153,7 @@ function Checkout() {
                                 <div className="header-content">
                                     <div className="header-title">
                                         <h2>Order Details</h2>
-                                        <p className="order-summary">Order #{Math.floor(Math.random() * 1000000)}</p>
+                                        <p className="order-summary">Order #{Math.random().toString(36).substr(2, 9).toUpperCase()}</p>
                                     </div>
                                     <div className="order-status">
                                         <span className="status-badge">
@@ -189,7 +179,10 @@ function Checkout() {
                             </div>
                             
                             <div className="user-info-section">
-                                <h3>Account Information</h3>
+                                <h3>
+                                    <i className="fas fa-user-circle"></i>
+                                    Account Information
+                                </h3>
                                 <div className="user-info">
                                     <div className="info-item">
                                         <div className="info-icon">
@@ -204,14 +197,16 @@ function Checkout() {
                                                     value={formData.name}
                                                     onChange={handleInputChange}
                                                     placeholder="Enter your full name"
-                                                    className={formData.name ? 'filled' : ''}
-                                                    readOnly
+                                                    className={`${formData.name && !errors.name ? 'filled' : ''} ${errors.name ? 'error' : ''}`}
                                                 />
-                                                {formData.name && (
+                                                {formData.name && !errors.name && (
                                                     <span className="verified-badge">
                                                         <i className="fas fa-check-circle"></i>
                                                         Verified
                                                     </span>
+                                                )}
+                                                {errors.name && (
+                                                    <span className="error-message">{errors.name}</span>
                                                 )}
                                             </div>
                                         </div>
@@ -229,14 +224,16 @@ function Checkout() {
                                                     value={formData.email}
                                                     onChange={handleInputChange}
                                                     placeholder="Enter your email address"
-                                                    className={formData.email ? 'filled' : ''}
-                                                    readOnly
+                                                    className={`${formData.email && !errors.email ? 'filled' : ''} ${errors.email ? 'error' : ''}`}
                                                 />
-                                                {formData.email && (
+                                                {formData.email && !errors.email && (
                                                     <span className="verified-badge">
                                                         <i className="fas fa-check-circle"></i>
                                                         Verified
                                                     </span>
+                                                )}
+                                                {errors.email && (
+                                                    <span className="error-message">{errors.email}</span>
                                                 )}
                                             </div>
                                         </div>
@@ -245,7 +242,10 @@ function Checkout() {
                             </div>
                             
                             <div className="courses-section">
-                                <h3>Courses Selected ({cart.length})</h3>
+                                <h3>
+                                    <i className="fas fa-graduation-cap"></i>
+                                    Courses Selected ({cart.length})
+                                </h3>
                                 <div className="courses-list">
                                     {cart.map(course => (
                                         <div key={course._id} className="checkout-course-item">
@@ -292,21 +292,21 @@ function Checkout() {
                                 </div>
                                 <div className="summary-item">
                                     <span>Platform Fee</span>
-                                    <span>₹0</span>
+                                    <span>₹10</span>
                                 </div>
                                 <div className="summary-item">
                                     <span>Tax</span>
-                                    <span>₹0</span>
+                                    <span>₹9.5</span>
                                 </div>
                                 <div className="summary-item total">
                                     <span>Total Amount</span>
-                                    <span>₹{total}</span>
+                                    <span>₹{(parseFloat(total) + 10 + 9.5).toFixed(2)}</span>
                                 </div>
                             </div>
 
                             <button 
                                 onClick={handlePayment}
-                                disabled={loading}
+                                disabled={loading || !formData.name || !formData.email}
                                 className="pay-now-btn"
                             >
                                 {loading ? (
@@ -316,8 +316,8 @@ function Checkout() {
                                     </span>
                                 ) : (
                                     <span>
-                                        <i className="fas fa-lock"></i>
-                                        Pay Securely ₹{total}
+                                        <i className="fas fa-lock"></i><br/>
+                                        Pay Securely ₹{(parseFloat(total) + 10 + 9.5).toFixed(2)}
                                     </span>
                                 )}
                             </button>

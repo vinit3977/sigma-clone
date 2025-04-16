@@ -75,10 +75,10 @@ function Courses() {
         return matchesSearch && matchesCategory;
     });
 
-    function enrollNow(courseTitle) {
-        const message = encodeURIComponent(`Hello, I'm interested in enrolling for the course: ${courseTitle}. Please provide more details.`);
-        window.location.href = `https://wa.me/919664778530?text=${message}`;
-    }
+    // function enrollNow(courseTitle) {
+    //     const message = encodeURIComponent(`Hello, I'm interested in enrolling for the course: ${courseTitle}. Please provide more details.`);
+    //     window.location.href = `https://wa.me/919664778530?text=${message}`;
+    // }
 
     return (
         <div className="courses-container">
@@ -113,10 +113,10 @@ function Courses() {
                         ))}
                     </select>
                     
-                    {/* <button onClick={() => navigate('/cart')} className="cart-button">
+                    <button onClick={() => navigate('/cart')} className="cart-button">
                         <i className="fas fa-shopping-cart"></i>
                         <span className="cart-badge">{cart.length}</span>
-                    </button> */}
+                    </button>
                 </div>
             </div>
 
@@ -172,26 +172,26 @@ function Courses() {
                                     </div>
                                     <div className="action-buttons">
                                         
-                                        {/* <button 
+                                        <button 
                                             onClick={() => addToCart(course)}
                                             className="add-to-cart-btn"
                                         >
                                             <i className="fas fa-cart-plus"></i>
-                                        </button> */}
-                                        {/* <button 
+                                        </button>
+                                        <button 
                                             onClick={() => buyNow(course)}
                                             className="buy-now-btn"
                                         >
                                             Enroll Now
-                                        </button> */}
+                                        </button>
 
 
-<button 
+{/* <button 
     onClick={() => enrollNow(course.title)}
     className="buy-now-btn"
 >
     Enroll Now
-</button>
+</button> */}
 
 
                                         

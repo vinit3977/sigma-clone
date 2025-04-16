@@ -17,6 +17,9 @@ import { AuthProvider } from "./components/AuthContext/AuthContext";
 import { CartProvider } from "./components/Courses/CartContext";
 import Cart from "./components/Courses/Cart";
 import Checkout from "./components/Courses/Checkout";
+import PaymentPage from "./components/Courses/PaymentPage";
+import ProfilePage from "./components/Profile/ProfilePage";
+import TransactionDetail from "./components/Profile/TransactionDetail";
 import { useEffect } from "react";
 import { LoadingProvider } from "./components/LoadingContext/LoadingContext";
 import { useLoading } from "./components/LoadingContext/LoadingContext";
@@ -47,7 +50,9 @@ function AppContent() {
   return (
     <>
       {isLoading && <Loader />}
-      {location.pathname !== "/login" && location.pathname !== "/signup" && <Header />}
+      {location.pathname !== "/login" && 
+       location.pathname !== "/signup" && 
+       location.pathname !== "/payment" && <Header />}
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
@@ -59,10 +64,15 @@ function AppContent() {
         <Route path="/Corporate" element={<Corporate />} />
         <Route path="/ITstaffing" element={<ITstaffing />} />
         <Route path="/courses" element={<Courses />} />
-        {/* <Route path="/cart" element={<Cart />} />
-        <Route path="/checkout" element={<Checkout />} /> */}
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/payment" element={<ProtectedRoute><PaymentPage /></ProtectedRoute>} />
+        <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+        <Route path="/transaction/:id" element={<ProtectedRoute><TransactionDetail /></ProtectedRoute>} />
       </Routes>
-      {location.pathname !== "/login" && location.pathname !== "/signup" && <Footer />}
+      {location.pathname !== "/login" && 
+       location.pathname !== "/signup" && 
+       location.pathname !== "/payment" && <Footer />}
     </>
   );
 }

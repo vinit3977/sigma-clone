@@ -4,12 +4,11 @@ import SITLogo from "../../assets/MainLogo/SITLogo.png";
 import "./Header.css";
 import { useAuth } from '../AuthContext/AuthContext';
 import { useCart } from '../Courses/CartContext';
+import axios from 'axios';
 
 const Header = () => {
   const { user, logout } = useAuth();
   const { cartItems } = useCart();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userData, setUserData] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
@@ -23,18 +22,6 @@ const Header = () => {
   const mobileMenuRef = useRef(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const storedUserData = localStorage.getItem("userData");
-    if (token && storedUserData) {
-      setIsLoggedIn(true);
-      try {
-        const parsedUserData = JSON.parse(storedUserData);
-        setUserData(parsedUserData);
-      } catch (error) {
-        console.error("Error parsing user data:", error);
-      }
-    }
-
     // Close dropdowns when clicking outside
     const handleClickOutside = (event) => {
       if (servicesDropdownRef.current && !servicesDropdownRef.current.contains(event.target)) {
@@ -49,26 +36,22 @@ const Header = () => {
       }
       if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target)) {
         setMobileMenuOpen(false);
-        document.body.style.overflow = 'auto'; // Ensure body scrolling is restored
+        document.body.style.overflow = 'auto';
       }
     };
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
-      document.body.style.overflow = 'auto'; // Reset overflow when component unmounts
+      document.body.style.overflow = 'auto';
     };
   }, []);
 
   const handleLogout = async () => {
     try {
       await logout();
-      localStorage.removeItem("token");
-      localStorage.removeItem("userData");
-      setIsLoggedIn(false);
-      setUserData(null);
       setMobileMenuOpen(false);
-      document.body.style.overflow = 'auto'; // Reset overflow when logging out
+      document.body.style.overflow = 'auto';
       navigate("/");
     } catch (error) {
       console.error('Failed to log out:', error);
@@ -150,44 +133,42 @@ const Header = () => {
                     <i className={`fas fa-chevron-down ${servicesDropdownOpen ? 'rotate' : ''}`}></i>
                   </button>
                   <div className={`dropdown-menu ${servicesDropdownOpen ? 'show' : ''}`}>
-                    <div className="dropdown-grid">
-                      <button 
-                        className="dropdown-item"
-                        onClick={() => handleServiceClick('/OnlineTraining')}
-                      >
-                        <div className="dropdown-icon">
-                          <i className="fas fa-laptop"></i>
-                        </div>
-                        <div className="dropdown-content">
-                          <h4>Online Training</h4>
-                          <p>Learn from anywhere, anytime</p>
-                        </div>
-                      </button>
-                      <button 
-                        className="dropdown-item"
-                        onClick={() => handleServiceClick('/Corporate')}
-                      >
-                        <div className="dropdown-icon">
-                          <i className="fas fa-building"></i>
-                        </div>
-                        <div className="dropdown-content">
-                          <h4>Corporate Training</h4>
-                          <p>Professional development for teams</p>
-                        </div>
-                      </button>
-                      <button 
-                        className="dropdown-item"
-                        onClick={() => handleServiceClick('/ITstaffing')}
-                      >
-                        <div className="dropdown-icon">
-                          <i className="fas fa-users"></i>
-                        </div>
-                        <div className="dropdown-content">
-                          <h4>IT Staffing</h4>
-                          <p>Find the right talent</p>
-                        </div>
-                      </button>
-                    </div>
+                    <button 
+                      className="dropdown-item"
+                      onClick={() => handleServiceClick('/OnlineTraining')}
+                    >
+                      <div className="dropdown-icon">
+                        <i className="fas fa-laptop"></i>
+                      </div>
+                      <div className="dropdown-content">
+                        <h4>Online Training</h4>
+                        <p>Learn from anywhere, anytime</p>
+                      </div>
+                    </button>
+                    <button 
+                      className="dropdown-item"
+                      onClick={() => handleServiceClick('/Corporate')}
+                    >
+                      <div className="dropdown-icon">
+                        <i className="fas fa-building"></i>
+                      </div>
+                      <div className="dropdown-content">
+                        <h4>Corporate Training</h4>
+                        <p>Professional development for teams</p>
+                      </div>
+                    </button>
+                    <button 
+                      className="dropdown-item"
+                      onClick={() => handleServiceClick('/ITstaffing')}
+                    >
+                      <div className="dropdown-icon">
+                        <i className="fas fa-users"></i>
+                      </div>
+                      <div className="dropdown-content">
+                        <h4>IT Staffing</h4>
+                        <p>Find the right talent</p>
+                      </div>
+                    </button>
                   </div>
                 </div>
                 <Link to="/about" className="nav-link">
@@ -205,20 +186,24 @@ const Header = () => {
               </div>
 
               <div className="auth-section">
-                {isLoggedIn && userData ? (
+                {user ? (
                   <div className="user-dropdown" ref={userDropdownRef}>
                     <button 
                       className="user-button"
                       onClick={() => setUserDropdownOpen(!userDropdownOpen)}
                     >
-                      <div className="user-avatar">
-                        {userData.username?.charAt(0).toUpperCase()}
+                      <div className="user-info">
+                        <div className="user-avatar">
+                          {user.name?.charAt(0).toUpperCase() || user.username?.charAt(0).toUpperCase()}
+                        </div>
+                        <span className="user-name">
+                          {user.name || user.username}
+                        </span>
                       </div>
-                      <span className="user-name">{userData.username}</span>
                       <i className={`fas fa-chevron-down ${userDropdownOpen ? 'rotate' : ''}`}></i>
                     </button>
                     <div className={`dropdown-menu user-menu ${userDropdownOpen ? 'show' : ''}`}>
-                      {userData.role === 'admin' && (
+                      {user.role === 'admin' && (
                         <>
                           <button 
                             className="dropdown-item"
@@ -230,12 +215,25 @@ const Header = () => {
                           <div className="dropdown-divider"></div>
                         </>
                       )}
+
+<button 
+                            className="dropdown-item"
+                            onClick={() => handleUserMenuClick('/profile')}
+                          >
+                            <i className="fas fa-user"></i>
+                            <span>Profile</span>
+                          </button>
+
+                      
                       <button 
                         className="dropdown-item"
                         onClick={() => handleUserMenuClick('/cart')}
                       >
                         <i className="fas fa-shopping-cart"></i>
-                        <span>Cart ({cartItems?.length || 0})</span>
+                        <span>Cart</span>
+                        {cartItems?.length > 0 && (
+                          <span className="cart-badge">{cartItems.length}</span>
+                        )}
                       </button>
                       <button 
                         className="dropdown-item text-danger" 
@@ -341,14 +339,14 @@ const Header = () => {
         </div>
 
         <div className="mobile-auth-section">
-          {isLoggedIn && userData ? (
+          {user ? (
             <>
               <div className="mobile-user-section">
                 <div className="mobile-user-info">
                   <div className="mobile-user-avatar">
-                    {userData.username?.charAt(0).toUpperCase()}
+                    {user.name?.charAt(0).toUpperCase() || user.username?.charAt(0).toUpperCase()}
                   </div>
-                  <div className="mobile-user-name">{userData.username}</div>
+                  <div className="mobile-user-name">{user.name || user.username}</div>
                 </div>
                 <button 
                   className="mobile-dropdown-toggle"
@@ -362,7 +360,7 @@ const Header = () => {
                 </button>
               </div>
               <div className={`mobile-user-menu ${mobileUserOpen ? 'show' : ''}`}>
-                {userData.role === 'admin' && (
+                {user.role === 'admin' && (
                   <button 
                     className="mobile-user-menu-item"
                     onClick={() => handleUserMenuClick('/admin')}

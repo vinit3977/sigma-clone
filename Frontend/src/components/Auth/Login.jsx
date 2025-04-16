@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../AuthContext/AuthContext';
-import './Auth.css';
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../AuthContext/AuthContext";
+import "./Auth.css";
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    email: '',
-    password: ''
+    email: "",
+    password: "",
   });
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuth();
@@ -16,42 +16,39 @@ const Login = () => {
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
-    setError('');
+    setError("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError("");
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
+      const response = await login(formData.email, formData.password);
+      console.log("Login response:", response); // ✅ Debug: Check returned data
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Login failed');
+      if (!response || !response.user) {
+        throw new Error("Invalid response from server");
       }
 
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('userData', JSON.stringify(data.user));
-      login(data.user);
+      const user = response.user;
 
-      if (data.user.role === 'admin') {
-        navigate('/admin');
+      // ✅ Role-based navigation
+      if (user.role === "user") {
+        navigate("/");
+      } else if (user.role === "admin") {
+        navigate("/admin");
       } else {
-        navigate('/');
+        console.warn("Unknown user role:", user.role);
+        setError("Unauthorized role");
+        navigate("/login"); // fallback just in case
       }
     } catch (err) {
-      setError(err.message || 'Login failed');
+      console.error("Login error:", err);
+      setError(err.message || "Login failed");
     } finally {
       setLoading(false);
     }
@@ -62,7 +59,7 @@ const Login = () => {
       <div className="auth-card">
         <h1 className="auth-title">Welcome Back</h1>
         <p className="auth-subtitle">Please sign in to your account</p>
-        
+
         {error && <div className="auth-error">{error}</div>}
 
         <form onSubmit={handleSubmit} className="auth-form">
@@ -105,7 +102,7 @@ const Login = () => {
               "Sign In"
             )}
           </button>
-          
+
           <Link to="/signup" className="auth-switch-link">
             Don't have an account? <span>Sign up</span>
           </Link>

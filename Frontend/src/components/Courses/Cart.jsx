@@ -1,28 +1,58 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../Courses/CartContext";
 import { useAuth } from "../AuthContext/AuthContext";
 import "./Cart.css";
 
 function Cart() {
-  const { cart, total, removeFromCart } = useCart();
+  const { cart, total, removeFromCart, isLoading, fetchCart } = useCart();
+  const [localLoading, setLocalLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleCheckout = () => {
     navigate("/checkout");
   };
 
+  // Force a re-render when cart changes
+  useEffect(() => {
+    const loadCart = async () => {
+      setLocalLoading(true);
+      try {
+        await fetchCart();
+      } catch (error) {
+        console.error("Error loading cart:", error);
+      } finally {
+        setLocalLoading(false);
+      }
+    };
+
+    loadCart();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="cart-container">
+        <div className="loading-overlay">
+          <div className="loader"></div>
+          <p>Updating cart...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="cart-container">
       <div className="cart-hero">
         <div className="cart-hero-content">
           <h1>Your Learning Cart</h1>
-          <p className="hero-subtitle">Review and manage your selected courses</p>
-          <div className="cart-breadcrumb">
+          <p className="hero-subtitle">
+            Review and manage your selected courses
+          </p>
+          {/* <div className="cart-breadcrumb">
             <span onClick={() => navigate("/")} className="breadcrumb-link">Home</span>
             <i className="fas fa-chevron-right"></i>
             <span className="active">Shopping Cart</span>
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -34,7 +64,10 @@ function Cart() {
                 <i className="fas fa-shopping-basket"></i>
               </div>
               <h2>Your Learning Journey Awaits</h2>
-              <p>Your cart is currently empty. Start your learning adventure by exploring our courses!</p>
+              <p>
+                Your cart is currently empty. Start your learning adventure by
+                exploring our courses!
+              </p>
               <button
                 onClick={() => navigate("/courses")}
                 className="browse-courses-btn"
@@ -48,7 +81,9 @@ function Cart() {
             <div className="cart-items">
               <div className="cart-header">
                 <h2>Selected Courses</h2>
-                <span className="course-count">{cart.length} {cart.length === 1 ? 'Course' : 'Courses'}</span>
+                <span className="course-count">
+                  {cart.length} {cart.length === 1 ? "Course" : "Courses"}
+                </span>
               </div>
               {cart.map((course) => (
                 <div key={course._id} className="cart-item-card">
@@ -65,7 +100,9 @@ function Cart() {
                     <div className="cart-item-header">
                       <div className="cart-item-title-group">
                         <h3 className="cart-item-title">{course.title}</h3>
-                        <p className="cart-item-description">{course.description}</p>
+                        <p className="cart-item-description">
+                          {course.description}
+                        </p>
                       </div>
                       <button
                         onClick={() => removeFromCart(course._id)}
@@ -89,6 +126,7 @@ function Cart() {
                           <i className="fas fa-star"></i>
                           4.8
                         </span>
+                        <br></br>
                       </div>
                       <div className="price-tag">
                         <span className="price-label">Price:</span>
@@ -109,17 +147,17 @@ function Cart() {
                 </div>
               </div>
               <div className="summary-details">
-                <div className="summary-item">
+                {/* <div className="summary-item">
                   <span>Subtotal ({cart.length} {cart.length === 1 ? 'Course' : 'Courses'})</span>
                   <span>₹{total}</span>
-                </div>
-                <div className="summary-item">
+                </div> */}
+                {/* <div className="summary-item">
                   <span>Platform Fee</span>
                   <span className="free">Free</span>
-                </div>
+                </div> */}
                 <div className="summary-divider"></div>
                 <div className="summary-item total">
-                  <span>Total Amount</span>
+                  <span>Amount</span>
                   <span>₹{total}</span>
                 </div>
               </div>
