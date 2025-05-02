@@ -105,6 +105,10 @@ const Header = () => {
                 <i className="fas fa-envelope"></i>
                 <a href="mailto:hello@sigmaacademy.net">hello@sigmaacademy.net</a>
               </div>
+              <div className="contact-item">
+                <i className="fas fa-balance-scale"></i>
+                <a href="#">GST: 24EGXPP1475B1Z4</a>
+              </div>
             </div>
           </div>
         </div>
@@ -185,7 +189,7 @@ const Header = () => {
                 </Link>
               </div>
 
-              <div className="auth-section">
+              {/* <div className="auth-section">
                 {user ? (
                   <div className="user-dropdown" ref={userDropdownRef}>
                     <button 
@@ -214,18 +218,17 @@ const Header = () => {
                           </button>
                           <div className="dropdown-divider"></div>
                         </>
-                      )}
+                      )} */}
 
-<button 
-                            className="dropdown-item"
-                            onClick={() => handleUserMenuClick('/profile')}
-                          >
-                            <i className="fas fa-user"></i>
-                            <span>Profile</span>
-                          </button>
+                      {/* <button 
+                        className="dropdown-item"
+                        onClick={() => handleUserMenuClick('/profile')}
+                      >
+                        <i className="fas fa-user"></i>
+                        <span>Profile</span>
+                      </button> */}
 
-                      
-                      <button 
+                      {/* <button 
                         className="dropdown-item"
                         onClick={() => handleUserMenuClick('/cart')}
                       >
@@ -234,30 +237,30 @@ const Header = () => {
                         {cartItems?.length > 0 && (
                           <span className="cart-badge">{cartItems.length}</span>
                         )}
-                      </button>
-                      <button 
+                      </button> */}
+                      {/* <button 
                         className="dropdown-item text-danger" 
                         onClick={handleLogout}
                       >
                         <i className="fas fa-sign-out-alt"></i>
                         <span>Logout</span>
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="auth-buttons">
-                    <Link to="/login" className="btn btn-outline">
+                //       </button> */}
+                {/* //     </div>
+                //   </div>
+                // ) : (
+                //   <div className="auth-buttons"> */}
+                    {/* <Link to="/login" className="btn btn-outline">
                       <i className="fas fa-sign-in-alt"></i>
                       <span>Login</span>
-                    </Link>
-                    <Link to="/signup" className="btn btn-primary">
+                    </Link> */}
+                    {/* <Link to="/signup" className="btn btn-primary">
                       <i className="fas fa-user-plus"></i>
                       <span>Sign Up</span>
-                    </Link>
-                  </div>
-                )}
-              </div>
-            </div>
+                    </Link> */}
+            {/* //       </div>
+            //     )}
+            //   </div>
+            // </div> */}
 
             <button 
               className={`mobile-menu-toggle ${mobileMenuOpen ? 'active' : ''}`}
@@ -329,7 +332,7 @@ const Header = () => {
             About Us
           </Link>
           <Link to="/courses" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>
-            <i className="fas fa-graduation-cap"></i>
+                    <i className="fas fa-graduation-cap"></i>
             Courses
           </Link>
           <Link to="/contact" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>
@@ -338,53 +341,45 @@ const Header = () => {
           </Link>
         </div>
 
-        <div className="mobile-auth-section">
+{/* <div className="mobile-auth-section">
           {user ? (
             <>
               <div className="mobile-user-section">
                 <div className="mobile-user-info">
+                  <div className="mobile-user-avatar"></div>
                   <div className="mobile-user-avatar">
                     {user.name?.charAt(0).toUpperCase() || user.username?.charAt(0).toUpperCase()}
                   </div>
                   <div className="mobile-user-name">{user.name || user.username}</div>
                 </div>
-                <button 
-                  className="mobile-dropdown-toggle"
-                  onClick={toggleMobileUser}
-                >
-                  <span>
-                    <i className="fas fa-user-circle"></i>
-                    My Account
-                  </span>
-                  <i className={`fas fa-chevron-down ${mobileUserOpen ? 'rotate' : ''}`}></i>
-                </button>
+               
               </div>
-              <div className={`mobile-user-menu ${mobileUserOpen ? 'show' : ''}`}>
-                {user.role === 'admin' && (
-                  <button 
-                    className="mobile-user-menu-item"
-                    onClick={() => handleUserMenuClick('/admin')}
-                  >
-                    <i className="fas fa-user-shield"></i>
-                    Admin Dashboard
-                  </button>
-                )}
-                <button 
+              <div className={`mobile-user-menu ${mobileUserOpen ? 'show' : ''}`}> */}
+                {/* {user.role === 'admin' && (
+                  // <button 
+                  //   className="mobile-user-menu-item"
+                  //   onClick={() => handleUserMenuClick('/admin')}
+                  // >
+                  //   <i className="fas fa-user-shield"></i>
+                  //   Admin Dashboard
+                  // </button>
+                )} */}
+                {/* <button 
                   className="mobile-user-menu-item"
                   onClick={() => handleUserMenuClick('/cart')}
                 >
                   <i className="fas fa-shopping-cart"></i>
                   Cart ({cartItems?.length || 0})
-                </button>
+                </button> */}
                 <div className="mobile-divider"></div>
-                <button 
+                {/* <button 
                   className="mobile-user-menu-item"
                   onClick={handleLogout}
                 >
                   <i className="fas fa-sign-out-alt"></i>
                   Logout
-                </button>
-              </div>
+                </button> */}
+              {/* </div>
             </>
           ) : (
             <div className="mobile-auth-buttons">
@@ -397,8 +392,8 @@ const Header = () => {
                 Sign Up
               </Link>
             </div>
-          )}
-        </div>
+          )} */}
+        </div> 
       </div>
     </header>
   );

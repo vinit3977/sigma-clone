@@ -208,7 +208,8 @@ const AboutUs = () => {
         <div className="cta-content">
           <h2>Ready to Start Your Journey?</h2>
           <p>Get in touch with us to learn more about our programs and how we can help you achieve your career goals.</p>
-          <button className="cta-button">Contact Us</button>
+          <a href="/contact" className="cta-button">Contact Us</a>
+
         </div>
       </div>
     </div>

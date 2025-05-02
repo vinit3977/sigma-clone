@@ -13,6 +13,7 @@ import AdminDashboard from "./AdminDashboard";
 import "./App.css";
 import ProtectedRoute from "./ProtectedRoute";
 import Footer from "./components/Home/Footer";
+
 import { AuthProvider } from "./components/AuthContext/AuthContext";
 import { CartProvider } from "./components/Courses/CartContext";
 import Cart from "./components/Courses/Cart";
@@ -45,6 +46,12 @@ function AppContent() {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
+  }, []);
+
+  useEffect(() => {
+    window.gtag('event', 'conversion', {
+      send_to: 'AW-11414626425/your_conversion_label'
+    });
   }, []);
 
   return (

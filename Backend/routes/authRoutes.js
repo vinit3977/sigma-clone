@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const argon2 = require("argon2");
 const { Server } = require("socket.io");
 const User = require("../models/userModel");
 const { protect } = require("../middleware/authMiddleware");
@@ -48,7 +47,7 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log("Login attempt with email:", email);
+    console.log("Login attempt with email:", req.body);
 
     if (!email || !password) {
       return res.status(400).json({ error: "Missing email or password" });

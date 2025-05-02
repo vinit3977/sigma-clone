@@ -54,19 +54,21 @@ function Courses() {
         }
     };
 
-    const addToCart = (course) => {
-        const updatedCart = [...cart, course];
-        setCart(updatedCart);
-        localStorage.setItem('cart', JSON.stringify(updatedCart));
-    };
+// add to cart wla
 
-    const buyNow = (course) => {
-        if (!isLoggedIn) {
-            navigate('/login');
-            return;
-        }
-        navigate('/checkout', { state: { courses: [course] } });
-    };
+    // const addToCart = (course) => {
+    //     const updatedCart = [...cart, course];
+    //     setCart(updatedCart);
+    //     localStorage.setItem('cart', JSON.stringify(updatedCart));
+    // };
+
+    // const buyNow = (course) => {
+    //     if (!isLoggedIn) {
+    //         navigate('/login');
+    //         return;
+    //     }
+    //     navigate('/checkout', { state: { courses: [course] } });
+    // };
 
     const filteredCourses = courses.filter(course => {
         const matchesSearch = course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -75,10 +77,10 @@ function Courses() {
         return matchesSearch && matchesCategory;
     });
 
-    // function enrollNow(courseTitle) {
-    //     const message = encodeURIComponent(`Hello, I'm interested in enrolling for the course: ${courseTitle}. Please provide more details.`);
-    //     window.location.href = `https://wa.me/919664778530?text=${message}`;
-    // }
+    function enrollNow(courseTitle) {
+        const message = encodeURIComponent(`Hello, I'm interested in enrolling for the course: ${courseTitle}. Please provide more details.`);
+        window.location.href = `https://wa.me/919664778530?text=${message}`;
+    }
 
     return (
         <div className="courses-container">
@@ -113,10 +115,10 @@ function Courses() {
                         ))}
                     </select>
                     
-                    <button onClick={() => navigate('/cart')} className="cart-button">
+                    {/* <button onClick={() => navigate('/cart')} className="cart-button">
                         <i className="fas fa-shopping-cart"></i>
                         <span className="cart-badge">{cart.length}</span>
-                    </button>
+                    </button> */}
                 </div>
             </div>
 
@@ -165,7 +167,7 @@ function Courses() {
                                     </span>
                                 </div>
 
-                                <div className="course-footer">
+                                {/* <div className="course-footer">
                                     <div className="price-tag">
                                         <span className="currency">₹</span>
                                         <span className="amount">{course.price}</span>
@@ -186,17 +188,18 @@ function Courses() {
                                         </button>
 
 
-{/* <button 
-    onClick={() => enrollNow(course.title)}
-    className="buy-now-btn"
->
-    Enroll Now
-</button> */}
+
 
 
                                         
                                     </div>
-                                </div>
+                                </div> */}
+                                <button 
+    onClick={() => enrollNow(course.title)}
+    className="buy-now-btn"
+>
+    Enroll Now
+</button>
                             </div>
                         </div>
                     ))}

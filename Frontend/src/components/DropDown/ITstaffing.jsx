@@ -58,7 +58,7 @@ const TrainingPage = () => {
               <div className="card-tag">Cloud</div>
               <h3>Cloud Computing</h3>
               <p>AWS Certified Solutions Architect, Azure Administrator, Google Cloud Professional, DevOps Engineering</p>
-              <a href="#" className="learn-more">
+              <a href="/courses" className="learn-more">
                 Learn More <i className="fas fa-arrow-right"></i>
               </a>
             </div>
@@ -75,7 +75,7 @@ const TrainingPage = () => {
               <div className="card-tag">Security</div>
               <h3>Cybersecurity</h3>
               <p>CompTIA Security+, Certified Ethical Hacker (CEH), CISSP, Network Security, Threat Intelligence</p>
-              <a href="#" className="learn-more">
+              <a href="/courses" className="learn-more">
                 Learn More <i className="fas fa-arrow-right"></i>
               </a>
             </div>
@@ -92,7 +92,7 @@ const TrainingPage = () => {
               <div className="card-tag">Advanced Security</div>
               <h3>Advanced Cybersecurity</h3>
               <p>Penetration Testing, Incident Response, Security Operations Center (SOC), Cloud Security, Risk Management</p>
-              <a href="#" className="learn-more">
+              <a href="/courses" className="learn-more">
                 Learn More <i className="fas fa-arrow-right"></i>
               </a>
             </div>

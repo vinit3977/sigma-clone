@@ -11,7 +11,7 @@ const { createServer } = require("http");
 const { Server } = require("socket.io");
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
-const paymentRoutes = require("./routes/paymentRoutes");
+// const paymentRoutes = require("./routes/paymentRoutes");
 const transactionRoutes = require("./routes/transactionRoutes");
 const User = require("./models/userModel");
 const Course = require("./models/courseModel");
@@ -23,6 +23,9 @@ const corsOptions = {
 };
 
 const app = express();
+app.use(cors(corsOptions));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: corsOptions,
@@ -30,19 +33,19 @@ const io = new Server(httpServer, {
 
 // Special handling for Stripe webhook route
 // This must be defined before the express.json() middleware
-app.post("/api/payment/webhook", express.raw({ type: "application/json" }));
+// app.post("/api/payment/webhook", express.raw({ type: "application/json" }));
 
 // For other routes, parse JSON
-app.use((req, res, next) => {
-  if (req.originalUrl === "/api/payment/webhook") {
-    next();
-  } else {
-    express.json()(req, res, next);
-  }
-});
+// app.use((req, res, next) => {
+//   if (req.originalUrl === "/api/payment/webhook") {
+//     next();
+//   } else {
+//     express.json()(req, res, next);
+//   }
+// });
 
-app.use(express.urlencoded({ extended: true }));
-app.use(cors(corsOptions));
+// app.use(express.urlencoded({ extended: true }));
+// app.use(cors(corsOptions));
 
 // Ensure uploads directory exists
 const uploadsDir = path.join(__dirname, "uploads");
@@ -90,7 +93,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 const PORT = process.env.PORT || 5000;
 
-const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret";
+const JWT_SECRET = process.env.JWT_SECRET || "xnsbddjsrrdsvinitgreat";
 
 // Connect to MongoDB
 const dbURL =
@@ -249,7 +252,7 @@ app.post("/api/auth/register", async (req, res) => {
 app.post("/api/auth/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log("Login attempt with email:", email);
+    console.log("Login attempt with email:", req.body);
 
     if (!email || !password) {
       return res.status(400).json({ error: "Missing email or password" });
@@ -275,7 +278,7 @@ app.post("/api/auth/login", async (req, res) => {
     const token = jwt.sign(
       { id: user._id, email: user.email, role: user.role },
       JWT_SECRET,
-      { expiresIn: "7d" }
+      { expiresIn: "1d" }
     );
 
     res.json({
@@ -311,18 +314,10 @@ app.post(
         });
       }
 
-      const { title, description, duration, price, category, videoUrl } =
-        req.body;
+      const { title, description, duration, category } = req.body;
 
       // Validate required fields
-      if (
-        !title ||
-        !description ||
-        !duration ||
-        !price ||
-        !category ||
-        !videoUrl
-      ) {
+      if (!title || !description || !duration || !category) {
         return res.status(400).json({
           error: "Missing required fields",
           details: "All fields are required",
@@ -333,9 +328,9 @@ app.post(
         title: title.trim(),
         description: description.trim(),
         duration: duration.trim(),
-        price: Number(price),
+        // price: Number(price),
         category,
-        videoUrl: videoUrl.trim(),
+        // videoUrl: videoUrl.trim(),
         image: req.file.filename,
         createdBy: req.user.id,
       });
@@ -368,15 +363,14 @@ app.put(
   upload,
   async (req, res) => {
     try {
-      const { title, description, duration, price, category, videoUrl } =
-        req.body;
+      const { title, description, duration, category } = req.body;
       const updateData = {
         title,
         description,
         duration,
-        price: Number(price),
+        // price: Number(price),
         category,
-        videoUrl,
+        // videoUrl,
       };
 
       if (req.file) {
@@ -527,8 +521,8 @@ app.get(
 
 // Routes
 app.use("/api/users", userRoutes);
-// app.use("/api/auth", authRoutes);
-app.use("/api/payment", paymentRoutes);
+app.use("/api/auth", authRoutes);
+// app.use("/api/payment", paymentRoutes);
 app.use("/api/transactions", transactionRoutes);
 
 // Start the server

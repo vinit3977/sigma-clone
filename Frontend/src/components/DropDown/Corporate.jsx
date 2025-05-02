@@ -56,7 +56,7 @@ const TrainingPage = () => {
               <div className="card-tag">Management</div>
               <h3>Project Management and IT Leadership</h3>
               <p>Project Management Professional (PMP), ITIL Foundation, Certified ScrumMaster (CSM)</p>
-              <a href="#" className="learn-more">
+              <a href="/courses" className="learn-more">
                 Learn More <i className="fas fa-arrow-right"></i>
               </a>
             </div>
@@ -73,7 +73,7 @@ const TrainingPage = () => {
               <div className="card-tag">Marketing</div>
               <h3>Digital Marketing</h3>
               <p>Web Development (WordPress), SMM, SEO, Graphics Design, Paid Advertisement</p>
-              <a href="#" className="learn-more">
+              <a href="/courses" className="learn-more">
                 Learn More <i className="fas fa-arrow-right"></i>
               </a>
             </div>
@@ -90,7 +90,7 @@ const TrainingPage = () => {
               <div className="card-tag">Enterprise</div>
               <h3>ERP Training</h3>
               <p>ERP SAP (SAP Power User Training, SAP End-user Training), ERP Oracle (Oracle Applications and Solutions), Salesforce Training</p>
-              <a href="#" className="learn-more">
+              <a href="/courses" className="learn-more">
                 Learn More <i className="fas fa-arrow-right"></i>
               </a>
             </div>
@@ -123,7 +123,7 @@ const TrainingPage = () => {
             <div className="quote-icon">
               <i className="fas fa-quote-right"></i>
             </div>
-            <p>I learned so much in the digital marketing course. Highly recommend Sigma IT Solutions!</p>
+            <p>I learned so much in the digital marketing course. Highly recommend Sigma IT Academy!</p>
             <div className="testimonial-author">
               <div className="author-avatar">R</div>
               <div className="author-info">

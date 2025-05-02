@@ -56,7 +56,7 @@ const TrainingPage = () => {
               <div className="card-tag">Development</div>
               <h3>Web Development</h3>
               <p>Full-stack development, React, Node.js, MongoDB, and modern web technologies</p>
-              <a href="#" className="learn-more">
+              <a href="/courses" className="learn-more">
                 Learn More <i className="fas fa-arrow-right"></i>
               </a>
             </div>
@@ -73,7 +73,7 @@ const TrainingPage = () => {
               <div className="card-tag">Marketing</div>
               <h3>Digital Marketing</h3>
               <p>SEO, Social Media Marketing, Content Marketing, Google Analytics, and PPC</p>
-              <a href="#" className="learn-more">
+              <a href="/courses" className="learn-more">
                 Learn More <i className="fas fa-arrow-right"></i>
               </a>
             </div>
@@ -90,7 +90,7 @@ const TrainingPage = () => {
               <div className="card-tag">Data Science</div>
               <h3>Data Science</h3>
               <p>Python, Machine Learning, Data Analysis, Statistics, and Big Data Technologies</p>
-              <a href="#" className="learn-more">
+              <a href="/courses" className="learn-more">
                 Learn More <i className="fas fa-arrow-right"></i>
               </a>
             </div>

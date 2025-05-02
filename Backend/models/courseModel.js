@@ -13,10 +13,10 @@ const courseSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please add course duration']
     },
-    price: {
-        type: Number,
-        required: [true, 'Please add course price']
-    },
+    // price: {
+    //     type: Number,
+    //     required: [true, 'Please add course price']
+    // },
     category: {
         type: String,
         required: [true, 'Please add course category']
@@ -25,10 +25,10 @@ const courseSchema = new mongoose.Schema({
         type: String,
         default: ''
     },
-    videoUrl: {
-        type: String,
-        default: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
-    }
+    // videoUrl: {
+    //     type: String,
+    //     default: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+    // }
 }, {
     timestamps: true
 });

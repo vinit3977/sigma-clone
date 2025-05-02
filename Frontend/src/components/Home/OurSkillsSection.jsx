@@ -1,7 +1,8 @@
 import "./OurSkillsSection.css";
-
+import wdev from "../../assets/ITstaff/wdev.jpg";
+import DigitalM from "../../assets/DigitalM.jpg";
 import teamDiscussion from "../../assets/PW.png";
-
+import DS from "../../assets/DS.jpg";
 import React, { useEffect, useState, useRef } from "react";
 
 const OurSkillsSection = () => {
@@ -52,75 +53,75 @@ const OurSkillsSection = () => {
     });
   };
 
-  const servicesData = [
-    {
-      title: "Enterprise IT Solutions",
-      percentage: 95,
-      description: "Comprehensive enterprise-level IT management",
-      icon: "🏢",
-      features: ["24/7 Support", "Cloud Integration", "Security"],
-      color: "orange",
-    },
-    {
-      title: "Digital Transformation",
-      percentage: 92,
-      description: "End-to-end digital transformation services",
-      icon: "🚀",
-      features: ["Process Automation", "Data Analytics", "Innovation"],
-      color: "orange",
-    },
-    {
-      title: "Custom Development",
-      percentage: 88,
-      description: "Bespoke software solutions for your needs",
-      icon: "💻",
-      features: ["Web Apps", "Mobile Apps", "Enterprise Software"],
-      color: "green",
-    },
-    {
-      title: "Tech Consulting",
-      percentage: 90,
-      description: "Strategic technology consulting services",
-      icon: "📊",
-      features: ["Strategy Planning", "Tech Advisory", "Implementation"],
-      color: "purple",
-    },
-  ];
+  // const servicesData = [
+  //   {
+  //     title: "Enterprise IT Solutions",
+  //     percentage: 95,
+  //     description: "Comprehensive enterprise-level IT management",
+  //     icon: "🏢",
+  //     features: ["24/7 Support", "Cloud Integration", "Security"],
+  //     color: "orange",
+  //   },
+  //   {
+  //     title: "Digital Transformation",
+  //     percentage: 92,
+  //     description: "End-to-end digital transformation services",
+  //     icon: "🚀",
+  //     features: ["Process Automation", "Data Analytics", "Innovation"],
+  //     color: "orange",
+  //   },
+  //   {
+  //     title: "Custom Development",
+  //     percentage: 88,
+  //     description: "Bespoke software solutions for your needs",
+  //     icon: "💻",
+  //     features: ["Web Apps", "Mobile Apps", "Enterprise Software"],
+  //     color: "green",
+  //   },
+  //   {
+  //     title: "Tech Consulting",
+  //     percentage: 90,
+  //     description: "Strategic technology consulting services",
+  //     icon: "📊",
+  //     features: ["Strategy Planning", "Tech Advisory", "Implementation"],
+  //     color: "purple",
+  //   },
+  // ];
 
-  const expertiseAreas = [
-    {
-      title: "Cloud Solutions",
-      count: "50+",
-      suffix: "+",
-      value: 50,
-      description: "Deployed Cloud Projects",
-      icon: "☁️",
-    },
-    {
-      title: "Digital Innovation",
-      count: "200+",
-      suffix: "+",
-      value: 200,
-      description: "Digital Transformation Projects",
-      icon: "💡",
-    },
-    {
-      title: "Client Success",
-      count: "98%",
-      suffix: "%",
-      value: 98,
-      description: "Client Satisfaction Rate",
-      icon: "⭐",
-    },
-    {
-      title: "Global Reach",
-      count: "20+",
-      suffix: "+",
-      value: 20,
-      description: "Countries Served",
-      icon: "🌍",
-    },
-  ];
+  // const expertiseAreas = [
+  //   {
+  //     title: "Cloud Solutions",
+  //     count: "50+",
+  //     suffix: "+",
+  //     value: 50,
+  //     description: "Deployed Cloud Projects",
+  //     icon: "☁️",
+  //   },
+  //   {
+  //     title: "Digital Innovation",
+  //     count: "200+",
+  //     suffix: "+",
+  //     value: 200,
+  //     description: "Digital Transformation Projects",
+  //     icon: "💡",
+  //   },
+  //   {
+  //     title: "Client Success",
+  //     count: "98%",
+  //     suffix: "%",
+  //     value: 98,
+  //     description: "Client Satisfaction Rate",
+  //     icon: "⭐",
+  //   },
+  //   {
+  //     title: "Global Reach",
+  //     count: "20+",
+  //     suffix: "+",
+  //     value: 20,
+  //     description: "Countries Served",
+  //     icon: "🌍",
+  //   },
+  // ];
 
   return (
     <section className="our-skills-section">
@@ -137,18 +138,79 @@ const OurSkillsSection = () => {
               className={`section-header fade-in ${isVisible ? "visible" : ""}`}
             >
               <span className="section-badge">Our Expertise</span>
-              <h2 className="section-title">
+              {/* <h2 className="section-title">
                 Driving Digital Excellence Through Innovation
               </h2>
               <p className="section-subtitle">
                 Empowering businesses with cutting-edge technology solutions and
                 strategic innovations
-              </p>
+              </p> */}
             </div>
           </div>
         </div>
+        <section className="courses-section">
+        {/* <div className="section-header">
+          <h2>Our IT Training Programs</h2>
+          <div className="header-line"></div>
+        </div> */}
 
-        <div className="row mt-5">
+     
+        
+        <div className="courses-grid">
+          <div className="course-card">
+            <div className="card-image">
+               <img src={DigitalM} alt="Digital Marketing" />
+              <div className="card-overlay">
+                <span className="duration"><i className="far fa-clock"></i> 4 Months</span>
+              </div>
+            </div>
+            <div className="card-content">
+              <div className="card-tag">Marketing</div>
+              <h3>Digital Marketing</h3>
+              <p>SEO, Social Media Marketing, Content Marketing, Google Analytics, and PPC</p>
+              <a href="/courses" className="learn-more">
+                Learn More <i className="fas fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+
+          <div className="course-card">
+            <div className="card-image">
+              <img src={wdev} alt="Cybersecurity" />
+              <div className="card-overlay">
+                <span className="duration"><i className="far fa-clock"></i> 3 Months</span>
+              </div>
+            </div>
+            <div className="card-content">
+              <div className="card-tag">Security</div>
+              <h3>Cybersecurity</h3>
+              <p>CompTIA Security+, Certified Ethical Hacker (CEH), CISSP, Network Security, Threat Intelligence</p>
+              <a href="/courses" className="learn-more">
+                Learn More <i className="fas fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+
+          <div className="course-card">
+            <div className="card-image">
+               <img src={DS} alt="ERP Training" />
+              <div className="card-overlay">
+                <span className="duration"><i className="far fa-clock"></i> 4 Months</span>
+              </div>
+            </div>
+            
+            <div className="card-content">
+              <div className="card-tag">Enterprise</div>
+              <h3>ERP Training</h3>
+              <p>ERP SAP (SAP Power User Training, SAP End-user Training), ERP Oracle (Oracle Applications and Solutions), Salesforce Training</p>
+              <a href="/courses" className="learn-more">
+                Learn More <i className="fas fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+        {/* <div className="row mt-5">
           <div className="col-12">
             <div className="tab-navigation">
               <button
@@ -171,9 +233,9 @@ const OurSkillsSection = () => {
               </button>
             </div>
           </div>
-        </div>
+        </div> */}
 
-        <div className="content-wrapper">
+        {/* <div className="content-wrapper">
           {activeTab === "services" ? (
             <div className="row services-grid">
               {servicesData.map((service, index) => (
@@ -246,11 +308,11 @@ const OurSkillsSection = () => {
               ))}
             </div>
           )}
-        </div>
+        </div> */}
 
         <div className="row mt-5">
           <div className="col-12 text-center">
-            <a href="#contact" className="cta-button">
+            <a href="/courses" className="cta-button">
               <span>Start Your Digital Journey</span>
               <svg className="arrow-icon" viewBox="0 0 24 24">
                 <path d="M5 12h14M12 5l7 7-7 7" />
@@ -270,7 +332,8 @@ const BannerSection = () => {
       <div className="content">
         <h4>We Make Difference</h4>
         <h1>Your Best Choice For Business Growth</h1>
-        <button className="cta-button">Get Started Now</button>
+        <a href="/contact" className="cta-button">Get Started Now</a>
+
       </div>
     </section>
   );

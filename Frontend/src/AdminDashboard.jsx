@@ -19,9 +19,9 @@ function AdminDashboard() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [duration, setDuration] = useState("");
-  const [price, setPrice] = useState("");
+  // const [price, setPrice] = useState("");
   const [category, setCategory] = useState("Cloud Computing");
-  const [videoUrl, setVideoUrl] = useState("");
+  // const [videoUrl, setVideoUrl] = useState("");
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -191,14 +191,14 @@ function AdminDashboard() {
       setError("Course duration is required");
       return false;
     }
-    if (!price || isNaN(Number(price)) || Number(price) <= 0) {
-      setError("Please enter a valid price (must be greater than 0)");
-      return false;
-    }
-    if (!videoUrl.trim()) {
-      setError("YouTube video URL is required");
-      return false;
-    }
+    // if (!price || isNaN(Number(price)) || Number(price) <= 0) {
+    //   setError("Please enter a valid price (must be greater than 0)");
+    //   return false;
+    // }
+    // if (!videoUrl.trim()) {
+    //   setError("YouTube video URL is required");
+    //   return false;
+    // }
     if (!category) {
       setError("Please select a category");
       return false;
@@ -223,9 +223,9 @@ function AdminDashboard() {
       formData.append("title", title.trim());
       formData.append("description", description.trim());
       formData.append("duration", duration.trim());
-      formData.append("price", price);
+      // formData.append("price", price);
       formData.append("category", category);
-      formData.append("videoUrl", videoUrl.trim());
+      // formData.append("videoUrl", videoUrl.trim());
 
       // Append the image file
       if (image instanceof File) {
@@ -278,9 +278,9 @@ function AdminDashboard() {
     setTitle(course.title);
     setDescription(course.description);
     setDuration(course.duration);
-    setPrice(course.price);
+    // setPrice(course.price);
     setCategory(course.category);
-    setVideoUrl(course.videoUrl || "");
+    // setVideoUrl(course.videoUrl || "");
     setPreview(
       course.image ? `http://localhost:5000/uploads/${course.image}` : ""
     );
@@ -312,9 +312,9 @@ function AdminDashboard() {
       formData.append("title", title);
       formData.append("description", description);
       formData.append("duration", duration);
-      formData.append("price", price);
+      // formData.append("price", price);
       formData.append("category", category);
-      formData.append("videoUrl", videoUrl);
+      // formData.append("videoUrl", videoUrl);
       if (image) {
         formData.append("image", image);
       }
@@ -350,9 +350,9 @@ function AdminDashboard() {
     setTitle("");
     setDescription("");
     setDuration("");
-    setPrice("");
+    // setPrice("");
     setCategory("Cloud Computing");
-    setVideoUrl("");
+    // setVideoUrl("");
     setImage(null);
     setPreview("");
     setIsEditing(false);
@@ -522,14 +522,14 @@ function AdminDashboard() {
                 onChange={(e) => setDuration(e.target.value)}
               />
             </div>
-            <div className="form-group">
+            {/* <div className="form-group">
               <input
                 type="number"
                 placeholder="Price"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
               />
-            </div>
+            </div> */}
             <div className="form-group">
               <select
                 value={category}
@@ -542,14 +542,14 @@ function AdminDashboard() {
                 ))}
               </select>
             </div>
-            <div className="form-group">
+            {/* <div className="form-group">
               <input
                 type="text"
                 placeholder="YouTube Video URL"
                 value={videoUrl}
                 onChange={(e) => setVideoUrl(e.target.value)}
               />
-            </div>
+            </div> */}
             <div className="form-group">
               <input
                 type="file"
@@ -636,9 +636,9 @@ function AdminDashboard() {
                         </p>
                         <div className="course-meta">
                           <p>Duration: {course.duration}</p>
-                          <p>Price: ₹{course.price}</p>
+                          {/* <p>Price: ₹{course.price}</p> */}
                           <p>Category: {course.category}</p>
-                          <p>Video: {course.videoUrl ? "Yes" : "No"}</p>
+                          {/* <p>Video: {course.videoUrl ? "Yes" : "No"}</p> */}
                         </div>
                         <div className="course-actions d-flex justify-content-between">
                           <button
