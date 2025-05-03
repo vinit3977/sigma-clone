@@ -24,7 +24,7 @@ function Checkout() {
         const fetchUserDetails = async () => {
             try {
                 const response = await axios.get(
-                    `http://localhost:5000/api/users/profile`,
+                    `https://sigma-clone.onrender.com/api/users/profile`,
                     {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem('token')}`
@@ -251,7 +251,7 @@ function Checkout() {
                                         <div key={course._id} className="checkout-course-item">
                                             <div className="course-image">
                                                 <img 
-                                                    src={`http://localhost:5000/uploads/${course.image}`}
+                                                    src={`https://sigma-clone.onrender.com/uploads/${course.image}`}
                                                     alt={course.title}
                                                 />
                                                 <div className="course-overlay">

@@ -66,7 +66,7 @@ function AdminDashboard() {
     }
 
     // Initialize socket connection
-    const newSocket = io("http://localhost:5000", {
+    const newSocket = io("https://sigma-clone.onrender.com", {
       auth: {
         token,
       },
@@ -109,7 +109,7 @@ function AdminDashboard() {
 
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/dashboard/stats",
+        "https://sigma-clone.onrender.com/api/dashboard/stats",
         {
           //   headers: {
           //     Authorization: `Bearer ${token}`,
@@ -132,7 +132,7 @@ function AdminDashboard() {
   const fetchCourses = async () => {
     setLoading((prev) => ({ ...prev, courses: true }));
     try {
-      const response = await axios.get("http://localhost:5000/courses", config);
+      const response = await axios.get("https://sigma-clone.onrender.com/courses", config);
       setCourses(response.data);
     } catch (error) {
       console.error("Error fetching courses:", error);
@@ -238,7 +238,7 @@ function AdminDashboard() {
       }
 
       const response = await axios.post(
-        "http://localhost:5000/courses",
+        "https://sigma-clone.onrender.com/courses",
         formData,
         {
           headers: {
@@ -282,14 +282,14 @@ function AdminDashboard() {
     setCategory(course.category);
     // setVideoUrl(course.videoUrl || "");
     setPreview(
-      course.image ? `http://localhost:5000/uploads/${course.image}` : ""
+      course.image ? `https://sigma-clone.onrender.com/uploads/${course.image}` : ""
     );
   };
 
   const handleDelete = async (courseId) => {
     if (window.confirm("Are you sure you want to delete this course?")) {
       try {
-        await axios.delete(`http://localhost:5000/courses/${courseId}`, config);
+        await axios.delete(`https://sigma-clone.onrender.com/courses/${courseId}`, config);
         fetchCourses();
         alert("Course deleted successfully!");
       } catch (error) {
@@ -320,7 +320,7 @@ function AdminDashboard() {
       }
 
       await axios.put(
-        `http://localhost:5000/courses/${editingCourse._id}`,
+        `https://sigma-clone.onrender.com/courses/${editingCourse._id}`,
         formData,
         {
           ...config,
@@ -364,7 +364,7 @@ function AdminDashboard() {
   const fetchUsers = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/users",
+        "https://sigma-clone.onrender.com/api/users",
         config
       );
       setUsers(response.data);
@@ -379,7 +379,7 @@ function AdminDashboard() {
   const handleDeleteUser = async (userId) => {
     if (window.confirm("Are you sure you want to delete this user?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/users/${userId}`, config);
+        await axios.delete(`https://sigma-clone.onrender.com/api/users/${userId}`, config);
         fetchUsers();
         alert("User deleted successfully!");
       } catch (error) {
@@ -400,7 +400,7 @@ function AdminDashboard() {
 
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/auth/verify-admin",
+        "https://sigma-clone.onrender.com/api/auth/verify-admin",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -623,7 +623,7 @@ function AdminDashboard() {
                       <div className="course-image">
                         {course.image && (
                           <img
-                            src={`http://localhost:5000/uploads/${course.image}`}
+                            src={`https://sigma-clone.onrender.com/uploads/${course.image}`}
                             alt={course.title}
                             className="card-img-top"
                           />

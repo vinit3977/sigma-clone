@@ -89,7 +89,7 @@ function Cart() {
                 <div key={course._id} className="cart-item-card">
                   <div className="cart-item-image">
                     <img
-                      src={`http://localhost:5000/uploads/${course.image}`}
+                      src={`https://sigma-clone.onrender.com/uploads/${course.image}`}
                       alt={course.title}
                     />
                     <div className="course-overlay">

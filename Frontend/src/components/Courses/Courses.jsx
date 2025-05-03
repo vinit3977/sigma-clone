@@ -43,7 +43,7 @@ function Courses() {
     const fetchCourses = async () => {
         showLoader();
         try {
-            const response = await axios.get('http://localhost:5000/api/courses/public');
+            const response = await axios.get('https://sigma-clone.onrender.com/api/courses/public');
             setCourses(response.data);
             setLoading(false);
         } catch (error) {
@@ -134,7 +134,7 @@ function Courses() {
                             <div className="course-image-container">
                                 {course.image && (
                                     <img
-                                        src={`http://localhost:5000/uploads/${course.image}`}
+                                        src={`https://sigma-clone.onrender.com/uploads/${course.image}`}
                                         alt={course.title}
                                         className="course-image"
                                     />

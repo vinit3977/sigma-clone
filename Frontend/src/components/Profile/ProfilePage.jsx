@@ -35,7 +35,7 @@ function ProfilePage() {
                 setLoading(true);
                 
                 // Fetch detailed user profile
-                const profileResponse = await axios.get('http://localhost:5000/api/users/profile', {
+                const profileResponse = await axios.get('https://sigma-clone.onrender.com/api/users/profile', {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`
                     }
@@ -43,7 +43,7 @@ function ProfilePage() {
                 setUserProfile(profileResponse.data);
                 
                 // Fetch user's purchased courses with details
-                const coursesResponse = await axios.get('http://localhost:5000/api/users/profile', {
+                const coursesResponse = await axios.get('https://sigma-clone.onrender.com/api/users/profile', {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`
                     }
@@ -51,7 +51,7 @@ function ProfilePage() {
                 
                 // Get the course details for each purchased course
                 if (coursesResponse.data.purchasedCourses && coursesResponse.data.purchasedCourses.length > 0) {
-                    const coursesData = await axios.get('http://localhost:5000/api/courses/public');
+                    const coursesData = await axios.get('https://sigma-clone.onrender.com/api/courses/public');
                     const purchasedCoursesDetails = coursesData.data.filter(
                         course => coursesResponse.data.purchasedCourses.includes(course._id)
                     );
@@ -59,7 +59,7 @@ function ProfilePage() {
                 }
                 
                 // Fetch user's transaction history
-                const transactionsResponse = await axios.get('http://localhost:5000/api/transactions/user', {
+                const transactionsResponse = await axios.get('https://sigma-clone.onrender.com/api/transactions/user', {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`
                     }
@@ -104,7 +104,7 @@ function ProfilePage() {
     const handleSaveProfile = async () => {
         try {
             setLoading(true);
-            const response = await axios.put('http://localhost:5000/api/users/profile', formData, {
+            const response = await axios.put('https://sigma-clone.onrender.com/api/users/profile', formData, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
@@ -311,7 +311,7 @@ function ProfilePage() {
                                     <div className="course-card" key={course._id}>
                                         <div className="course-image">
                                             <img 
-                                                src={`http://localhost:5000/uploads/${course.image}`} 
+                                                src={`https://sigma-clone.onrender.com/uploads/${course.image}`} 
                                                 alt={course.title} 
                                                 onError={(e) => {
                                                     e.target.onerror = null;

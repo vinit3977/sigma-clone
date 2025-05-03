@@ -67,7 +67,7 @@ function CheckoutForm() {
         console.log('Creating payment intent with amount:', location.state.amount);
         
         const response = await axios.post(
-          'http://localhost:5000/api/payment/create-payment-intent',
+          'https://sigma-clone.onrender.com/api/payment/create-payment-intent',
           {
             amount: location.state.amount,
             currency: 'inr',
@@ -202,7 +202,7 @@ function CheckoutForm() {
       while (retries > 0 && !purchaseSuccess) {
         try {
           await axios.post(
-            'http://localhost:5000/api/users/purchase-courses',
+            'https://sigma-clone.onrender.com/api/users/purchase-courses',
             {
               courses: location.state.courses.map(course => course._id),
               orderId: location.state.orderId,
@@ -226,7 +226,7 @@ function CheckoutForm() {
 
       // Create transaction record
       await axios.post(
-        'http://localhost:5000/api/transactions',
+        'https://sigma-clone.onrender.com/api/transactions',
         {
           orderId: location.state.orderId,
           courses: location.state.courses.map(course => ({
@@ -245,7 +245,7 @@ function CheckoutForm() {
 
       // Send confirmation email
       await axios.post(
-        'http://localhost:5000/api/payment/send-confirmation',
+        'https://sigma-clone.onrender.com/api/payment/send-confirmation',
         {
           orderId: location.state.orderId,
           courses: location.state.courses,

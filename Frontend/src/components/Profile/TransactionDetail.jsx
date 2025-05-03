@@ -21,7 +21,7 @@ function TransactionDetail() {
         const fetchTransaction = async () => {
             try {
                 setLoading(true);
-                const response = await axios.get(`http://localhost:5000/api/transactions/${id}`, {
+                const response = await axios.get(`https://sigma-clone.onrender.com/api/transactions/${id}`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`
                     }
@@ -113,7 +113,7 @@ function TransactionDetail() {
                             <div className="course-item" key={index}>
                                 <div className="course-image">
                                     <img 
-                                        src={`http://localhost:5000/uploads/${courseItem.course.image}`} 
+                                        src={`https://sigma-clone.onrender.com/uploads/${courseItem.course.image}`} 
                                         alt={courseItem.course.title} 
                                         onError={(e) => {
                                             e.target.onerror = null;

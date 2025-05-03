@@ -18,7 +18,7 @@ const Course = require("./models/courseModel");
 const fs = require("fs");
 
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: "https://sigmaitacademy.com",
   credentials: true,
 };
 

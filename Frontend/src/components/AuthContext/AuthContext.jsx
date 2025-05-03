@@ -81,7 +81,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     try {
-      const response = await axios.get("http://localhost:5000/api/users/me", {
+      const response = await axios.get("https://sigma-clone.onrender.com/api/users/me", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -114,7 +114,7 @@ export const AuthProvider = ({ children }) => {
     try {
       console.log("Attempting login with email:", email);
       const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        "https://sigma-clone.onrender.com/api/auth/login",
         { email, password },
         {
           headers: {
@@ -153,7 +153,7 @@ export const AuthProvider = ({ children }) => {
       if (enhancedUserData.role === "admin") {
         try {
           const adminResponse = await axios.get(
-            "http://localhost:5000/api/auth/verify-admin",
+            "https://sigma-clone.onrender.com/api/auth/verify-admin",
             {
               headers: {
                 Authorization: `Bearer ${token}`,
