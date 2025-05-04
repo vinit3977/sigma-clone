@@ -10,7 +10,13 @@ body {
   background-color: #002E50; /* Dark blue background */
   color: #ffffff; /* White text color */
   text-align: center; /* Center-align text */
-  padding: 5vw 10vw; /* Responsive padding */
+  padding: 20px;
+  overflow: hidden;
+}
+
+.hero-section img {
+  max-width: 100%;
+  height: auto;
 }
 
 /* Dark Blue Background Utility Class */
@@ -103,6 +109,30 @@ body {
     font-size: 0.9rem; /* Smaller font size for mobile */
   }
 
+  .hero-section .row {
+    flex-direction: column-reverse;
+  }
+
+  .hero-section h1 {
+    font-size: 2rem;
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .hero-section .lead {
+    text-align: center;
+    font-size: 1rem;
+  }
+
+  .hero-section .d-flex {
+    justify-content: center !important;
+  }
+
+  .hero-section img {
+    margin: 10px auto;
+    max-width: 80%;
+  }
+
   .circle-decorations {
     width: 70vw; /* Smaller size for mobile */
     height: 70vw;
@@ -113,6 +143,15 @@ body {
   .hero-section {
     font-size: 0.8rem; /* Even smaller font size for extra small screens */
     padding: 10vw 3vw;
+  }
+
+  .hero-section .btn {
+    width: 100% !important;
+    margin: 5px 0 !important;
+  }
+
+  .hero-section .d-flex {
+    flex-direction: column;
   }
 
   .circle-decorations {
