@@ -17,12 +17,42 @@ const User = require("./models/userModel");
 const Course = require("./models/courseModel");
 const fs = require("fs");
 
+const app = express();
+
+
+// vinit yeh tera code 
+
+// const corsOptions = {
+//   origin: "https://sigmaitacademy.com",
+//   credentials: true,
+// };
+
+// app.use(cors(corsOptions));
+// app.use(express.urlencoded({ extended: true }));
+// app.use(express.json());
+// const httpServer = createServer(app);
+// const io = new Server(httpServer, {
+//   cors: corsOptions,
+// });
+
+// idhar se mera 
+
 const corsOptions = {
-  origin: "https://sigmaitacademy.com",
+  origin: (origin, callback) => {
+    const allowedOrigins = [
+      'http://localhost:5173', // Local development
+      'https://sigmaitacademy.com', // Production domain
+      
+    ];
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
 };
 
-const app = express();
 app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -30,6 +60,8 @@ const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: corsOptions,
 });
+
+// yaha tak 
 
 // Special handling for Stripe webhook route
 // This must be defined before the express.json() middleware
