@@ -186,6 +186,17 @@ const emitStatsUpdate = async () => {
   io.emit("statsUpdate", { totalStudents, totalCourses });
 };
 
+// Public route to get all courses
+app.get("/api/courses/public", async (req, res) => {
+  try {
+    const courses = await Course.find();
+    res.json(courses);
+  } catch (error) {
+    console.error('Error fetching public courses:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
 // Register
 app.post("/api/auth/register", async (req, res) => {
   try {

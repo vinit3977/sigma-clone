@@ -3,6 +3,8 @@ import axios from "axios";
 
 const AuthContext = createContext(null);
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
     // Initialize user state from localStorage if available
@@ -81,7 +83,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     try {
-      const response = await axios.get("https://sigma-clone.onrender.com/api/users/me", {
+      const response = await axios.get(`${API_BASE_URL}/api/users/me`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -114,7 +116,7 @@ export const AuthProvider = ({ children }) => {
     try {
       console.log("Attempting login with email:", email);
       const response = await axios.post(
-        "https://sigma-clone.onrender.com/api/auth/login",
+        `${API_BASE_URL}/api/auth/login`,
         { email, password },
         {
           headers: {
@@ -153,7 +155,7 @@ export const AuthProvider = ({ children }) => {
       if (enhancedUserData.role === "admin") {
         try {
           const adminResponse = await axios.get(
-            "https://sigma-clone.onrender.com/api/auth/verify-admin",
+            `${API_BASE_URL}/api/auth/verify-admin`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
