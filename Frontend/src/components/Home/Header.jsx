@@ -188,83 +188,12 @@ const Header = () => {
                   <span>Contact Us</span>
                 </Link>
               </div>
-
-              {/* <div className="auth-section">
-                {user ? (
-                  <div className="user-dropdown" ref={userDropdownRef}>
-                    <button 
-                      className="user-button"
-                      onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                    >
-                      <div className="user-info">
-                        <div className="user-avatar">
-                          {user.name?.charAt(0).toUpperCase() || user.username?.charAt(0).toUpperCase()}
-                        </div>
-                        <span className="user-name">
-                          {user.name || user.username}
-                        </span>
-                      </div>
-                      <i className={`fas fa-chevron-down ${userDropdownOpen ? 'rotate' : ''}`}></i>
-                    </button>
-                    <div className={`dropdown-menu user-menu ${userDropdownOpen ? 'show' : ''}`}>
-                      {user.role === 'admin' && (
-                        <>
-                          <button 
-                            className="dropdown-item"
-                            onClick={() => handleUserMenuClick('/admin')}
-                          >
-                            <i className="fas fa-cog"></i>
-                            <span>Admin Dashboard</span>
-                          </button>
-                          <div className="dropdown-divider"></div>
-                        </>
-                      )} */}
-
-                      {/* <button 
-                        className="dropdown-item"
-                        onClick={() => handleUserMenuClick('/profile')}
-                      >
-                        <i className="fas fa-user"></i>
-                        <span>Profile</span>
-                      </button> */}
-
-                      {/* <button 
-                        className="dropdown-item"
-                        onClick={() => handleUserMenuClick('/cart')}
-                      >
-                        <i className="fas fa-shopping-cart"></i>
-                        <span>Cart</span>
-                        {cartItems?.length > 0 && (
-                          <span className="cart-badge">{cartItems.length}</span>
-                        )}
-                      </button> */}
-                      {/* <button 
-                        className="dropdown-item text-danger" 
-                        onClick={handleLogout}
-                      >
-                        <i className="fas fa-sign-out-alt"></i>
-                        <span>Logout</span>
-                //       </button> */}
-                {/* //     </div>
-                //   </div>
-                // ) : (
-                //   <div className="auth-buttons"> */}
-                    {/* <Link to="/login" className="btn btn-outline">
-                      <i className="fas fa-sign-in-alt"></i>
-                      <span>Login</span>
-                    </Link> */}
-                    {/* <Link to="/signup" className="btn btn-primary">
-                      <i className="fas fa-user-plus"></i>
-                      <span>Sign Up</span>
-                    </Link> */}
-            {/* //       </div>
-            //     )}
-            //   </div>
-            // </div> */}
+            </div>
 
             <button 
               className={`mobile-menu-toggle ${mobileMenuOpen ? 'active' : ''}`}
               onClick={toggleMobileMenu}
+              aria-label="Toggle navigation menu"
             >
               <span></span>
               <span></span>
@@ -332,7 +261,7 @@ const Header = () => {
             About Us
           </Link>
           <Link to="/courses" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>
-                    <i className="fas fa-graduation-cap"></i>
+            <i className="fas fa-graduation-cap"></i>
             Courses
           </Link>
           <Link to="/contact" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>
@@ -340,60 +269,6 @@ const Header = () => {
             Contact Us
           </Link>
         </div>
-
-{/* <div className="mobile-auth-section">
-          {user ? (
-            <>
-              <div className="mobile-user-section">
-                <div className="mobile-user-info">
-                  <div className="mobile-user-avatar"></div>
-                  <div className="mobile-user-avatar">
-                    {user.name?.charAt(0).toUpperCase() || user.username?.charAt(0).toUpperCase()}
-                  </div>
-                  <div className="mobile-user-name">{user.name || user.username}</div>
-                </div>
-               
-              </div>
-              <div className={`mobile-user-menu ${mobileUserOpen ? 'show' : ''}`}> */}
-                {/* {user.role === 'admin' && (
-                  // <button 
-                  //   className="mobile-user-menu-item"
-                  //   onClick={() => handleUserMenuClick('/admin')}
-                  // >
-                  //   <i className="fas fa-user-shield"></i>
-                  //   Admin Dashboard
-                  // </button>
-                )} */}
-                {/* <button 
-                  className="mobile-user-menu-item"
-                  onClick={() => handleUserMenuClick('/cart')}
-                >
-                  <i className="fas fa-shopping-cart"></i>
-                  Cart ({cartItems?.length || 0})
-                </button> */}
-                <div className="mobile-divider"></div>
-                {/* <button 
-                  className="mobile-user-menu-item"
-                  onClick={handleLogout}
-                >
-                  <i className="fas fa-sign-out-alt"></i>
-                  Logout
-                </button> */}
-              {/* </div>
-            </>
-          ) : (
-            <div className="mobile-auth-buttons">
-              <Link to="/login" className="mobile-btn btn-outline" onClick={() => setMobileMenuOpen(false)}>
-                <i className="fas fa-sign-in-alt"></i>
-                Login
-              </Link>
-              <Link to="/signup" className="mobile-btn btn-primary" onClick={() => setMobileMenuOpen(false)}>
-                <i className="fas fa-user-plus"></i>
-                Sign Up
-              </Link>
-            </div>
-          )} */}
-        </div> 
       </div>
     </header>
   );

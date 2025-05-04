@@ -1,12 +1,10 @@
 import React from "react";
 import './Footer.css';
-import ISO from "../../assets/ISO/isoo.png"; // Assuming you have an ISO image in the assets folder
-
+import ISO from "../../assets/ISO/isoo.png";
 
 const Footer = () => {
   return (
     <footer className="footer-wrapper">
-      {/* Main Footer Section */}
       <div className="main-footer">
         <div className="container">
           <div className="footer-content">
@@ -15,23 +13,20 @@ const Footer = () => {
               <h2>Sigma IT Academy</h2>
               <p>Your partner in IT education and career growth, offering industry-focused courses, expert training, and IT staffing solutions to shape your future in technology.</p>
               <div className="social-links">
-                <a href="https://www.facebook.com/sigmaacademyit" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.facebook.com/sigmaacademyit" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
                   <i className="fab fa-facebook"></i>
                 </a>
-                <a href="https://g.co/kgs/Ada9GMj
-" target="_blank" rel="noopener noreferrer">
+                <a href="https://g.co/kgs/Ada9GMj" target="_blank" rel="noopener noreferrer" aria-label="Google">
                   <i className="fab fa-google"></i>
                 </a>
-                <a href="https://www.linkedin.com/company/sigma-it-academy" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.linkedin.com/company/sigma-it-academy" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                   <i className="fab fa-linkedin"></i>
                 </a>
-                <a href="https://www.instagram.com/sigmaitacademy/" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.instagram.com/sigmaitacademy/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                   <i className="fab fa-instagram"></i>
-                </a> 
+                </a>
               </div>
-              {/* <img src={ISO} alt="Sigma IT Academy Logo" style={{ width: '100px', height: 'auto' }} /> */}
             </div>
-
 
             {/* Quick Links */}
             <div className="footer-links-section">
@@ -70,19 +65,14 @@ const Footer = () => {
                     <p>+91-9664778530</p>
                   </div>
                 </div>
-                {/* Contact Us underline */}
-                <div className="contact-underline"></div>
               </div>
-             
-              <img src={ISO} alt="Sigma IT Academy Logo" style={{ width: '200px', height: '200px' }} />
-            
+              <img src={ISO} alt="ISO Certification" className="iso-image" />
             </div>
           </div>
 
-          {/* Footer Bottom */}
           <div className="footer-bottom">
             <div className="copyright">
-              Copyright &copy; 2020 Sigma IT Academy. |{" "}
+              Copyright &copy; {new Date().getFullYear()} Sigma IT Academy. |{" "}
               <a href="/PrivacyPolicy">Privacy Policy</a> |{" "}
               <a href="/T&C.html">Terms & Conditions</a> |{" "}
               <a href="/faq.html">FAQ</a>
