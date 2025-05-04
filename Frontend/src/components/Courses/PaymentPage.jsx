@@ -35,6 +35,9 @@
 //   const stripe = useStripe();
 //   const elements = useElements();
 
+// const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+
+
 //   // Store card element reference when available
 //   useEffect(() => {
 //     if (elements) {
@@ -67,7 +70,7 @@
 //         console.log('Creating payment intent with amount:', location.state.amount);
         
 //         const response = await axios.post(
-//           'https://sigma-clone.onrender.com/api/payment/create-payment-intent',
+//           `${API_BASE_URL}/api/payment/create-payment-intent`,
 //           {
 //             amount: location.state.amount,
 //             currency: 'inr',
@@ -202,7 +205,7 @@
 //       while (retries > 0 && !purchaseSuccess) {
 //         try {
 //           await axios.post(
-//             'https://sigma-clone.onrender.com/api/users/purchase-courses',
+//             `${API_BASE_URL}/api/users/purchase-courses`,
 //             {
 //               courses: location.state.courses.map(course => course._id),
 //               orderId: location.state.orderId,
@@ -226,7 +229,7 @@
 
 //       // Create transaction record
 //       await axios.post(
-//         'https://sigma-clone.onrender.com/api/transactions',
+//         `${API_BASE_URL}/api/transactions`,
 //         {
 //           orderId: location.state.orderId,
 //           courses: location.state.courses.map(course => ({
@@ -245,7 +248,7 @@
 
 //       // Send confirmation email
 //       await axios.post(
-//         'https://sigma-clone.onrender.com/api/payment/send-confirmation',
+//         `${API_BASE_URL}/api/payment/send-confirmation`,
 //         {
 //           orderId: location.state.orderId,
 //           courses: location.state.courses,

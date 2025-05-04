@@ -12,6 +12,9 @@ function TransactionDetail() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+
+
     useEffect(() => {
         if (!user) {
             navigate('/login');
@@ -21,7 +24,7 @@ function TransactionDetail() {
         const fetchTransaction = async () => {
             try {
                 setLoading(true);
-                const response = await axios.get(`https://sigma-clone.onrender.com/api/transactions/${id}`, {
+                const response = await axios.get(`${API_BASE_URL}/api/transactions/${id}`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`
                     }
@@ -113,7 +116,7 @@ function TransactionDetail() {
                             <div className="course-item" key={index}>
                                 <div className="course-image">
                                     <img 
-                                        src={`https://sigma-clone.onrender.com/uploads/${courseItem.course.image}`} 
+                                        src={`${API_BASE_URL}/uploads/${courseItem.course.image}`} 
                                         alt={courseItem.course.title} 
                                         onError={(e) => {
                                             e.target.onerror = null;

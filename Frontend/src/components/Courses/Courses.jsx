@@ -14,6 +14,8 @@ function Courses() {
     const navigate = useNavigate();
     const { showLoader, hideLoader } = useLoading();
 
+    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+
     const categories = [
         "Cloud Computing",
         "Cybersecurity",
@@ -43,7 +45,7 @@ function Courses() {
     const fetchCourses = async () => {
         showLoader();
         try {
-            const response = await axios.get('https://sigma-clone.onrender.com/api/courses/public');
+            const response = await axios.get(`${API_BASE_URL}/api/courses/public`);
             setCourses(response.data);
             setLoading(false);
         } catch (error) {
@@ -134,7 +136,7 @@ function Courses() {
                             <div className="course-image-container">
                                 {course.image && (
                                     <img
-                                        src={`https://sigma-clone.onrender.com/uploads/${course.image}`}
+                                        src={`${API_BASE_URL}/uploads/${course.image}`}
                                         alt={course.title}
                                         className="course-image"
                                     />

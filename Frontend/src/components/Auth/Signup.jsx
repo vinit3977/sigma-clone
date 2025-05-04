@@ -3,6 +3,9 @@ import { useNavigate, Link } from "react-router-dom";
 import "./Auth.css";
 import axios from "axios";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+
+
 const Signup = () => {
   const [formData, setFormData] = useState({
     username: "",
@@ -42,8 +45,7 @@ const Signup = () => {
     setError("");
 
     try {
-      const response = await axios.post(
-        "https://sigma-clone.onrender.com/api/auth/register",
+      const response = await axios.post(`${API_BASE_URL}/api/auth/register`,
         {
           username: formData.username,
           email: formData.email,

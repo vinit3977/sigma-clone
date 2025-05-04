@@ -9,6 +9,10 @@ function Cart() {
   const [localLoading, setLocalLoading] = useState(false);
   const navigate = useNavigate();
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+
+
+
   const handleCheckout = () => {
     navigate("/checkout");
   };
@@ -89,7 +93,7 @@ function Cart() {
                 <div key={course._id} className="cart-item-card">
                   <div className="cart-item-image">
                     <img
-                      src={`https://sigma-clone.onrender.com/uploads/${course.image}`}
+                      src={`${API_BASE_URL}/uploads/${course.image}`}
                       alt={course.title}
                     />
                     <div className="course-overlay">
