@@ -15,6 +15,8 @@ function TransactionDetail() {
     const API_BASE_URL = "https://sigma-clone.onrender.com" || 'http://localhost:5000';
 
 
+    
+
     useEffect(() => {
         if (!user) {
             navigate('/login');
